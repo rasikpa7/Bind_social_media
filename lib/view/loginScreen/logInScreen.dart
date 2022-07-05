@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:google_fonts/google_fonts.dart';
 class LogInScree extends StatelessWidget {
   const LogInScree({Key? key}) : super(key: key);
 
@@ -31,7 +32,8 @@ class LogInScree extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                     SizedBox(height: 10,),
-                      Text('Login',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 30,color: Color.fromARGB(255, 11, 90, 155)),),
+                      Text('Login',style:  GoogleFonts.roboto(letterSpacing: 2,
+                        fontWeight: FontWeight.w900,fontSize: 30,color: Color.fromARGB(255, 11, 90, 155)),),
                     SizedBox(height: 20,),
                  TextFormField(
                   decoration: InputDecoration(

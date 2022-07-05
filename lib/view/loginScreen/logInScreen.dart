@@ -32,7 +32,7 @@ class LogInScree extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                     SizedBox(height: 10,),
-                      Text('Login',style:  GoogleFonts.roboto(letterSpacing: 2,
+                      Text('Login',style:  GoogleFonts.lato(letterSpacing: 2,
                         fontWeight: FontWeight.w900,fontSize: 30,color: Color.fromARGB(255, 11, 90, 155)),),
                     SizedBox(height: 20,),
                  TextFormField(

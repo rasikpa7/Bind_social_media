@@ -1,3 +1,4 @@
+import 'package:bind/view/loginScreen/logInScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -9,11 +10,7 @@ class WebScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: Center(
-        child: Text('This is web'),
-      ),
-    );
+    return LogInScreen();
     
   }
 }

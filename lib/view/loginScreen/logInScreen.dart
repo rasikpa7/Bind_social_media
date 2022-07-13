@@ -1,3 +1,5 @@
+import 'package:bind/resources/auth_methods.dart';
+import 'package:bind/utils/utils.dart';
 import 'package:bind/view/widgets/text/fieldInput.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class _LogInScreenState extends State<LogInScreen> {
   final TextEditingController _emailcontroller = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading=false;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -27,6 +30,32 @@ class _LogInScreenState extends State<LogInScreen> {
     _passwordController.dispose();
   }
 
+void LogInUser()async{
+  
+  setState(() {
+  _isLoading=true;  
+  });
+  String res= await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordController.text);
+
+if(res=='success'){
+  setState(() {  
+  
+  _isLoading=false;
+});
+ showSnackBarr(res, context);
+
+}else{
+  //snackbar
+  setState(() {
+  
+  _isLoading=false;
+});
+  showSnackBarr(res, context);
+}
+
+
+
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +127,16 @@ class _LogInScreenState extends State<LogInScreen> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.teal,
                             ),
-                            onPressed: () {},
-                            child: const Text(
+                            onPressed: () {
+                              LogInUser();
+                            },
+                            child: _isLoading?
+                            const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ):
+                             const Text(
                               'LogIn',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),

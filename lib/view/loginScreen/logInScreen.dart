@@ -1,5 +1,9 @@
 import 'package:bind/resources/auth_methods.dart';
+import 'package:bind/responsive/mobile_scree_layout.dart';
+import 'package:bind/responsive/responsive_layout_screen.dart';
+import 'package:bind/responsive/web_screen_layout.dart';
 import 'package:bind/utils/utils.dart';
+import 'package:bind/view/sighUpScreen/signUpScreen.dart';
 import 'package:bind/view/widgets/text/fieldInput.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +47,10 @@ if(res=='success'){
   _isLoading=false;
 });
  showSnackBarr(res, context);
+
+   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const  ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),)));
 
 }else{
   //snackbar
@@ -194,7 +202,7 @@ if(res=='success'){
                             text: 'sign Up',
                             recognizer: TapGestureRecognizer()
                             ..onTap = (){
-
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>SignUpScreen() ,));
                             },
                             style: TextStyle(
                                 color: Colors.blueAccent,

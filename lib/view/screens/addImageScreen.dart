@@ -7,8 +7,16 @@ class AddImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text('AddImage')),
+    return Scaffold(
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+          children: [ElevatedButton(onPressed: (){}, child: Text('choose from camera')),
+          ElevatedButton(onPressed: (){}, child: Text('choose from gallery'))],
+        ),
+      ),
+
     );
+
   }
 }

@@ -1,6 +1,8 @@
 
 
-import 'dart:ffi';
+
+
+import 'dart:developer';
 
 import 'package:bind/model/user.dart';
 import 'package:bind/resources/auth_methods.dart';
@@ -12,12 +14,18 @@ final AuthMethods _authMethods=AuthMethods();
 
 
 
-  
-User get getUser =>_user!;
+ 
+User? get getUser =>_user;
 
 Future<void> refreshUser() async {
-  User user =await _authMethods.getUserDetails();
-  _user=user;
+  print('villichuuuuuuu');
+  _user  =await _authMethods.getUserDetails();
+ 
+  log(_user!.photoUrl.toString());
+
+  // log('message:$user');
+   debugPrint('testcheck: $_user');
+  notifyListeners();
 }
 
 }

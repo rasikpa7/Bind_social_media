@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:bind/model/user.dart' as model;
@@ -17,6 +18,10 @@ Future<model.User> getUserDetails() async{
   DocumentSnapshot snap= await _firestore.collection('users')
   .doc(currentUser.uid)
   .get();
+
+  print(snap);
+  debugPrint('movieTitle: $snap');
+
 
   return model.User.fromSnap(snap);
 }

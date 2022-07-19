@@ -1,4 +1,5 @@
-import 'package:bind/view/screens/screenwidgets/user_post.dart';
+import 'package:bind/view/screens/feedScreen/widgets/user_post.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -21,15 +22,32 @@ class HomeScreen extends StatelessWidget {
           children: [
             Text('Bind',style: TextStyle(letterSpacing: 4,
               color: Colors.black),),
-            Icon(Icons.message),
+            Icon(Icons.message_outlined),
           ],
         ),
 
       ),
 
-      body: ListView.builder(itemCount: people.length,
-        itemBuilder: (context, index) =>
-      UserPosts(name: people[index],) ),
+      body:
+      StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+      builder:(context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){
+
+        if(snapshot.connectionState==ConnectionState.waiting){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return ListView.builder(itemCount: snapshot.data!.docs.length,
+          itemBuilder: ((context, index) {
+          return UserPosts(snap: snapshot.data!.docs[index].data(), );
+        }));
+
+
+
+      },
+      )
+   
 
     );
   }

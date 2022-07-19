@@ -23,6 +23,9 @@ class AddImageScreen extends StatefulWidget {
 
 class _AddImageScreenState extends State<AddImageScreen> {
 
+  bool isLoading=false;
+
+
 Uint8List? _file;
 final TextEditingController _descriptionController =TextEditingController();
  void postImage(
@@ -30,16 +33,25 @@ final TextEditingController _descriptionController =TextEditingController();
   String username,
   String profImage
  )async{
+  setState(() {
+    isLoading=true;
+  });
   try{
 
     String res= await FireStoreMethods().uploadPost(_descriptionController.text, _file!, uid, username, profImage);
 
     if(res=='success'){
+       setState(() {
+      
+      isLoading=false;
+    });
       showSnackBarr('Posted !', context);
+      clearImage();
     }
     else{
       showSnackBarr(res, context);
     }
+   
   }catch(e){
     showSnackBarr(e.toString(), context);
     
@@ -99,7 +111,12 @@ final TextEditingController _descriptionController =TextEditingController();
     super.dispose();
     _descriptionController.dispose();
   }
-
+ 
+ void clearImage(){
+  setState(() {
+    _file=null;
+  });
+ }
 
 
 
@@ -119,7 +136,9 @@ Widget build(BuildContext context) {
      Scaffold(
       appBar: AppBar(
         backgroundColor:Colors.black,
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+        leading: IconButton(onPressed: () {
+          clearImage();
+        }, icon: Icon(Icons.arrow_back)),
         title: Text('Post to'),
         centerTitle: false,
         actions: [
@@ -139,6 +158,9 @@ Widget build(BuildContext context) {
 
       body: Column(
         children: [
+          isLoading?const  LinearProgressIndicator():
+          Padding(padding: EdgeInsets.only(top: 0)),
+          Divider(),
           SizedBox(height: 10.h,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

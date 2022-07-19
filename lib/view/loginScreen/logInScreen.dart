@@ -33,9 +33,25 @@ class _LogInScreenState extends State<LogInScreen> {
     _emailcontroller.dispose();
     _passwordController.dispose();
   }
+  showLoaderDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
 
 void LogInUser()async{
-  
+
+
   setState(() {
   _isLoading=true;  
   });
@@ -98,7 +114,7 @@ if(res=='success'){
                           letterSpacing: 2.w,
                           fontWeight: FontWeight.w900,
                           fontSize: 30.sp,
-                          color: Color.fromARGB(255, 11, 90, 155)),
+                          color: const Color.fromARGB(255, 11, 90, 155)),
                     ),
                     SizedBox(
                       height: 20.h,
@@ -137,13 +153,9 @@ if(res=='success'){
                             ),
                             onPressed: () {
                               LogInUser();
+                              _isLoading?showLoaderDialog(context):Container();
                             },
-                            child: _isLoading?
-                            const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ):
+                            child: 
                              const Text(
                               'LogIn',
                               style: TextStyle(fontWeight: FontWeight.bold),

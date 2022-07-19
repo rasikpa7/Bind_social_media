@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
+  
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -29,6 +30,9 @@ class ProfileScreen extends StatelessWidget {
            
          
              profilepic(),
+        
+            Text(user.bio,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,fontStyle: FontStyle.italic),),
+                SizedBox(height: 10,),
 
              Expanded(child: 
              ExploreGrid())

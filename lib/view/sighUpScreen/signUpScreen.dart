@@ -51,6 +51,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _image = im;
     });
   }
+    showLoaderDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
+        ],),
+    );
+    }
 
   void signUpUser()async{
 
@@ -182,13 +191,12 @@ if(res!='success'){
                         ),
                         onPressed: () async{
                               signUpUser();
+                                 _isLoading?showLoaderDialog(context):Container();
                           
                      
                         },
-                        child:_isLoading?const Center(
-                          child: CircularProgressIndicator(color: Colors.white,),
-                        ):
-                         Text(
+                        child:
+                         const Text(
                           'Sign Up',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),

@@ -3,7 +3,7 @@ import 'package:bind/provider/user_provider.dart';
 import 'package:bind/view/loginScreen/logInScreen.dart';
 import 'package:bind/view/screens/ActivityScreen.dart';
 import 'package:bind/view/screens/addScreen/addImageScreen.dart';
-import 'package:bind/view/screens/homeScreen.dart';
+import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profileScreen/profileScreen.dart';
 import 'package:bind/view/screens/searchScreen.dart';
 import 'package:bind/view/sighUpScreen/signUpScreen.dart';

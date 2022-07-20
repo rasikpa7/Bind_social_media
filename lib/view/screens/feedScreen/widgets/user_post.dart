@@ -1,5 +1,6 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
+import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,9 @@ class _UserPostsState extends State<UserPosts> {
             ),
           ),
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              FireStoreMethods().likePost(
+                  widget.snap['postId'], user!.uid, widget.snap['likes']);
               setState(() {
                 isLikeAnimation = true;
               });
@@ -91,31 +94,34 @@ class _UserPostsState extends State<UserPosts> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    LikeAnimation(
-                      isAnimating: widget.snap['likes'].contains(user!.uid),
-                      smallLike: true,
-                      child: IconButton(
-                        icon: const Icon(Icons.favorite),
-                        onPressed: () {},
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  LikeAnimation(
+                    isAnimating: widget.snap['likes'].contains(user!.uid),
+                    smallLike: true,
+                    child: IconButton(
+                      icon: widget.snap['likes'].contains(user.uid)?
+                       Icon(
+                        Icons.favorite,color: Colors.red,): Icon(
+                        Icons.favorite_border_outlined,color: Colors.red,),
+                      onPressed: () async {
+                        FireStoreMethods().likePost(widget.snap['postId'],
+                            user.uid, widget.snap['likes']);
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Icon(Icons.chat_bubble_outline),
-                    ),
-                    Icon(Icons.send),
-                  ],
-                ),
-                Icon(Icons.bookmark),
-              ],
-            ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right:10.0),
+                    child: Icon(Icons.chat_bubble_outline),
+                  ),
+                  Icon(Icons.send),
+                ],
+              ),
+              Icon(Icons.bookmark),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

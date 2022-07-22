@@ -15,13 +15,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.8),
       appBar: AppBar(
         // backgroundColor:Colors.transparent ,
         elevation: 0,
         title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Bind',style: TextStyle(letterSpacing: 4,
-              color: Colors.black),),
+            Text('Bind',style: TextStyle(fontStyle: FontStyle.italic,
+              letterSpacing: 4,
+              color: Colors.white),),
             Icon(Icons.message_outlined),
           ],
         ),
@@ -36,11 +38,17 @@ class HomeScreen extends StatelessWidget {
           return const Center(
             child: CircularProgressIndicator(),
           );
+        }else if(snapshot.hasError){
+          return const Center(
+            child: Text('Something went wrong'),
+          );
         }
 
         return ListView.builder(itemCount: snapshot.data!.docs.length,
           itemBuilder: ((context, index) {
-          return UserPosts(snap: snapshot.data!.docs[index].data(), );
+          return 
+        
+           UserPosts(snap: snapshot.data!.docs[index].data(), );
         }));
 
 

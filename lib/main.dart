@@ -3,13 +3,15 @@ import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
 import 'package:bind/utils/dimention.dart';
-import 'package:bind/view/loginScreen/logInScreen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import 'view/screens/loginScreen/logInScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            appBarTheme: AppBarTheme(color: Colors.black),
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: const Color(0XFFEFF3F6)),
           home: StreamBuilder(

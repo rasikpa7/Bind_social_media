@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -33,12 +35,18 @@ Future<model.User> getUserDetails() async{
        required String password,
        required String username,
        required String bio,
-       required Uint8List file
+       required Uint8List file,
+       required bool isGoogle
       })async {
 String res='Some error occured';
 try{
   if(email.isEmpty||password.isEmpty||username.isEmpty||bio.isEmpty||file!=null){
     //register user
+    if(isGoogle){
+     
+      
+
+    }
   UserCredential cred= await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
 String photoUrl=await StorageMethods().uploadImageToStorage('profilePics', file, false);

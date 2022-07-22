@@ -106,7 +106,7 @@ class _UserPostsState extends State<UserPosts> {
                       icon: widget.snap['likes'].contains(user.uid)?
                        Icon(
                         Icons.favorite,color: Colors.red,): Icon(
-                        Icons.favorite_border_outlined,color: Colors.red,),
+                        Icons.favorite_border_outlined,color: Colors.black,),
                       onPressed: () async {
                         FireStoreMethods().likePost(widget.snap['postId'],
                             user.uid, widget.snap['likes']);

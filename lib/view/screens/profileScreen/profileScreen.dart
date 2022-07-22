@@ -27,6 +27,7 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            
            
          
              profilepic(),

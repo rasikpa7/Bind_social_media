@@ -1,3 +1,4 @@
+import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
@@ -13,26 +14,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class LogInScreen extends StatefulWidget {
+class LogInScreen extends StatelessWidget {
   LogInScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LogInScreen> createState() => _LogInScreenState();
-}
+ 
 
-class _LogInScreenState extends State<LogInScreen> {
+
+
+
   final TextEditingController _emailcontroller = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading=false;
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _emailcontroller.dispose();
-    _passwordController.dispose();
-  }
+  
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   _emailcontroller.dispose();
+  //   _passwordController.dispose();
+  // }
   showLoaderDialog(BuildContext context){
     AlertDialog alert=AlertDialog(
       content: new Row(
@@ -48,40 +50,21 @@ class _LogInScreenState extends State<LogInScreen> {
       },
     );
   }
-
-void LogInUser()async{
-
-
-  setState(() {
-  _isLoading=true;  
-  });
-  String res= await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordController.text);
-
-if(res=='success'){
-  setState(() {  
   
-  _isLoading=false;
-});
- showSnackBarr(res, context);
-
-   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const  ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),)));
-
-}else{
-  //snackbar
-  setState(() {
-  
-  _isLoading=false;
-});
-  showSnackBarr(res, context);
-}
 
 
 
-}
+
+
   @override
   Widget build(BuildContext context) {
+
+
+ bool isLoading =Provider.of<UserProvider>(context).isLoading;
+
+
+
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -149,11 +132,12 @@ if(res=='success'){
                         borderRadius: BorderRadius.circular(15.r),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.teal,
+                              primary: Colors.blue,
                             ),
                             onPressed: () {
-                              LogInUser();
-                              _isLoading?showLoaderDialog(context):Container();
+                              LogInUser(context);
+                              isLoading?showLoaderDialog(context):Container();
+                            
                             },
                             child: 
                              const Text(
@@ -175,7 +159,7 @@ if(res=='success'){
                         Container(
                           width: 100.w,
                           decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: Colors.teal,
                               borderRadius: BorderRadius.circular(15.r)),
                           child: IconButton(
                               onPressed: () {},
@@ -184,21 +168,7 @@ if(res=='success'){
                                 color: Colors.white,
                               )),
                         ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Container(
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                              color: Colors.lightBlue,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: const FaIcon(
-                                FontAwesomeIcons.facebook,
-                                color: Colors.white,
-                              )),
-                        )
+                    
                       ],
                     ),
                     SizedBox(
@@ -229,5 +199,35 @@ if(res=='success'){
         ),
       ),
     );
+    
   }
+      void LogInUser(BuildContext context)async{
+       
+  // isLoading=true;  
+  Provider.of<UserProvider>(context,listen: false).isLoadingValue(true);
+
+  String res= await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordController.text);
+
+if(res=='success'){
+  
+  
+ // isLoading=false;
+    Provider.of<UserProvider>(context,listen: false).isLoadingValue(false);
+
+ showSnackBarr(res, context);
+
+   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const  ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),)));
+
+}else{
+
+  // isLoading=false;
+  Provider.of<UserProvider>(context,listen: false).isLoadingValue(false);
+
+
+  showSnackBarr(res, context);
+}
+  
+}
 }

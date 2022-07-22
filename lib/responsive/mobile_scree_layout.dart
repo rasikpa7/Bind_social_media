@@ -1,11 +1,12 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
-import 'package:bind/view/loginScreen/logInScreen.dart';
+
 import 'package:bind/view/screens/ActivityScreen.dart';
-import 'package:bind/view/screens/addScreen/addImageScreen.dart';
+
 import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profileScreen/profileScreen.dart';
 import 'package:bind/view/screens/searchScreen.dart';
+import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';
 import 'package:bind/view/sighUpScreen/signUpScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,7 +46,10 @@ final _pages=[
     return Scaffold(
       body: _pages[_currentIndex],
 
-      bottomNavigationBar: CupertinoTabBar(
+      bottomNavigationBar: BottomNavigationBar(type:BottomNavigationBarType.fixed ,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex,
         onTap: (value) {
           setState(() {
@@ -53,17 +57,17 @@ final _pages=[
           });
           
         },
-        height: 59.h,
+   
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: '',
+          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Feed',
           backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.search),label: '',
+              BottomNavigationBarItem(icon: Icon(Icons.search),label: 'Search',
           backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.add_circle),label: '',
+              BottomNavigationBarItem(icon: Icon(Icons.add_circle),label: 'Add Post',
           backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite),label: '',
+              BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'Activity',
           backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.person),label: '',
+              BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile',
           backgroundColor: Colors.white),
 
       ]),

@@ -5,7 +5,8 @@ import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
 import 'package:bind/utils/utils.dart';
-import 'package:bind/view/loginScreen/logInScreen.dart';
+import 'package:bind/view/screens/loginScreen/logInScreen.dart';
+
 import 'package:bind/view/widgets/text/fieldInput.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _isLoading=true;
     });
-       String res= await AuthMethods().signUpUser(
+       String res= await AuthMethods().signUpUser(isGoogle: false,
                               email: _emailcontroller.text.trim(),
                               password: _passwordController.text.trim(),
                               username: _usernamecontroller.text.trim(),
@@ -82,6 +83,7 @@ if(res!='success'){
    ) ));
 
 }
+ showSnackBarr(res, context);
  setState(() {
       _isLoading=false;
     });

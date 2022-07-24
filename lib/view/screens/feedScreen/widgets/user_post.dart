@@ -1,6 +1,7 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
+import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +162,9 @@ class _UserPostsState extends State<UserPosts> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CommentsScreen()));
+                  },
                   child: Text(
                     'View all comments',
                     style: TextStyle(color: Colors.grey[800]),

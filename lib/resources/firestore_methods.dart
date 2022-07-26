@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:bind/resources/storage_methods.dart';
+import 'package:bind/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 
 import '../model/post.dart';
@@ -28,31 +30,66 @@ class FireStoreMethods {
           profImage: profImage,
           likes: []);
 
-          _firestore.collection('posts').doc(postId).set(post.toJson());
+      _firestore.collection('posts').doc(postId).set(post.toJson());
 
-          res='success';
+      res = 'success';
     } catch (err) {
-      res=err.toString();
+      res = err.toString();
     }
     return res;
   }
-     Future<void> likePost(String PostId ,String uid ,List likes)async{
-      try{
 
-        if(likes.contains(uid)){
-        await  _firestore.collection('posts').doc(PostId).update({
-            'likes': FieldValue.arrayRemove([uid])
+  Future<void> likePost(String PostId, String uid, List likes) async {
+    try {
+      if (likes.contains(uid)) {
+        await _firestore.collection('posts').doc(PostId).update({
+          'likes': FieldValue.arrayRemove([uid])
         });
-        }else{
-             await  _firestore.collection('posts').doc(PostId).update({
-            'likes': FieldValue.arrayUnion([uid])
-
-        });}
-
-      }catch(e){
-        print(e.toString());
-
+      } else {
+        await _firestore.collection('posts').doc(PostId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        });
       }
-     }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
+  Future<void> postComment(String postId, String text, String uid, String name,
+      String profilePic) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set({
+          'profilePic': profilePic,
+          'name': name,
+          'uid': uid,
+          'text': text,
+          'commentId': commentId,
+          'datePublished': DateTime.now()
+        });
+      } else {
+        print('text is empty');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void>deletePost(String postId,BuildContext context)async{
+String res;
+    try{
+     await  _firestore.collection('posts').doc(postId).delete();
+     showSnackBarr('Post Deleted', context);
+    }catch(e){
+      print(e.toString());
+      showSnackBarr(e.toString(), context);
+    }
+  
+  }
 }

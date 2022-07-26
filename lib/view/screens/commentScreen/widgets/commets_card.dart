@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CommentCard extends StatefulWidget {
-  const CommentCard({Key? key}) : super(key: key);
+  final snap;
+   CommentCard({Key? key,  required this.snap}) : super(key: key);
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -28,7 +30,7 @@ class _CommentCardState extends State<CommentCard> {
     child: Row(
       children: [
          CircleAvatar(
-          backgroundImage:  NetworkImage(user!.photoUrl!),
+          backgroundImage:  NetworkImage(widget.snap['profilePic']),
           radius: 18,
         ),
 
@@ -43,18 +45,26 @@ class _CommentCardState extends State<CommentCard> {
                   text: 
                  TextSpan(children: [
                   TextSpan(
-                    text: 'Username',style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.black,
+                    text: widget.snap['name'],style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.black,
                     
                     )
                   ),
-                  const TextSpan(
-                    text: '   Some description',style: TextStyle(color: Colors.black,
+                   TextSpan(
+                    text: '   ${widget.snap['text']}',style: TextStyle(color: Colors.black,
                     
                     )
                   )
                 ])
                 ),
-                 const Text('20/12/2000',style: TextStyle(fontWeight: FontWeight.w300),)
+                 Padding(
+                   padding: const EdgeInsets.only(left:7.0),
+                   child: Text(
+                      DateFormat.yMMMd()
+                          .format(widget.snap['datePublished'].toDate()),
+                      style: TextStyle(fontSize: 11,
+                        color: Colors.grey[800]),
+                    ),
+                 ),
               ],
             ),
           ),

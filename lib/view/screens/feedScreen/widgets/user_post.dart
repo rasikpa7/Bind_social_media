@@ -1,8 +1,10 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
+import 'package:bind/utils/utils.dart';
 import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -19,9 +21,40 @@ class UserPosts extends StatefulWidget {
 }
 
 class _UserPostsState extends State<UserPosts> {
+  int commentLenght = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getComments();
+  }
+
+  void getComments() async {
+    QuerySnapshot snap = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.snap['postId'])
+        .collection('comments')
+        .get();
+
+    try {
+        
+          final commentLengh = snap.docs.length;
+          setState(() {
+            commentLenght=commentLengh;
+          });
+
+ 
+    } catch (e) {
+      print(e.toString());
+      // showSnackBarr(e.toString(), context);
+    }
+  
+  }
+
   bool isLikeAnimation = false;
   @override
   Widget build(BuildContext context) {
+      getComments();
     final User? user = Provider.of<UserProvider>(context).getUser;
     return Card(
       child: Column(
@@ -51,7 +84,19 @@ class _UserPostsState extends State<UserPosts> {
                     )
                   ],
                 ),
-                Icon(Icons.menu)
+                IconButton(onPressed: ()async{
+   showDialog(context: context,builder: (ctx)=>
+   AlertDialog(title: Text('Delete Post'),
+   content: Text('Are you sure want to delete ?'),
+   actions: [
+    ElevatedButton(onPressed: ()async{
+  await FireStoreMethods().deletePost(widget.snap['postId'], context);
+  Navigator.of(context).pop();
+    }, child: 
+    const Icon(Icons.delete))
+   ],
+   ));
+                }, icon: const Icon(Icons.more_vert))
               ],
             ),
           ),
@@ -101,21 +146,26 @@ class _UserPostsState extends State<UserPosts> {
               Row(
                 children: [
                   LikeAnimation(
-                    isAnimating: widget.snap['likes'].contains(user!.uid),
+                    isAnimating: widget.snap['likes'].contains(user?.uid),
                     smallLike: true,
                     child: IconButton(
-                      icon: widget.snap['likes'].contains(user.uid)?
-                       Icon(
-                        Icons.favorite,color: Colors.red,): Icon(
-                        Icons.favorite_border_outlined,color: Colors.black,),
+                      icon: widget.snap['likes'].contains(user?.uid)
+                          ? Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            )
+                          : Icon(
+                              Icons.favorite_border_outlined,
+                              color: Colors.black,
+                            ),
                       onPressed: () async {
                         FireStoreMethods().likePost(widget.snap['postId'],
-                            user.uid, widget.snap['likes']);
+                            user!.uid, widget.snap['likes']);
                       },
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right:10.0),
+                    padding: const EdgeInsets.only(right: 10.0),
                     child: Icon(Icons.chat_bubble_outline),
                   ),
                   Icon(Icons.send),
@@ -163,10 +213,15 @@ class _UserPostsState extends State<UserPosts> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CommentsScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            CommentsScreen(snap: widget.snap)));
                   },
-                  child: Text(
-                    'View all comments',
+                  child:commentLenght==0?Text(
+                    '${commentLenght} comments',
+                    style: TextStyle(color: Colors.grey[800]),
+                  ): Text(
+                    'View all ${commentLenght} comments',
                     style: TextStyle(color: Colors.grey[800]),
                   ),
                 ),

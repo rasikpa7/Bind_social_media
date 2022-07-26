@@ -1,6 +1,8 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
+import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/view/screens/commentScreen/widgets/commets_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,16 +10,36 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatelessWidget {
-  const CommentsScreen({Key? key}) : super(key: key);
+  final TextEditingController _textController = TextEditingController();
+  final snap;
+  CommentsScreen({Key? key, required this.snap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-     final User? user=Provider.of<UserProvider>(context).getUser;
+    final User? user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         title: Text('commets'),
       ),
-      body: CommentCard(),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('posts')
+              .doc(snap['postId'])
+              .collection('comments').orderBy('datePublished',descending: true)
+              .snapshots(),
+              builder: (context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){
+                if(snapshot.connectionState==ConnectionState.waiting){
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return ListView.builder(itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                  return CommentCard(snap: snapshot.data!.docs[index].data(),);
+                });
+              },
+              ),
       bottomNavigationBar: SafeArea(
           child: Container(
         height: 55.h,
@@ -27,32 +49,40 @@ class CommentsScreen extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
+              backgroundImage: NetworkImage(user!.photoUrl!),
               radius: 18,
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left:16.0,right: 8),
+                padding: const EdgeInsets.only(left: 16.0, right: 8),
                 child: TextField(
+                  controller: _textController,
                   decoration: InputDecoration(
-                      hintText: 'Comment as  @${user!.username}', border: InputBorder.none),
+                      hintText: 'Comment as  @${user.username}',
+                      border: InputBorder.none),
                 ),
               ),
             ),
             InkWell(
-              onTap: (){
-
+              onTap: () async {
+                await FireStoreMethods().postComment(
+                    snap['postId'],
+                    _textController.text,
+                    user.uid,
+                    user.username,
+                    user.photoUrl!);
+                _textController.clear();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 8,
                   horizontal: 8,
                 ),
-                child: const Text('Post',
-                style: TextStyle(
-                  color: Colors.blueAccent
-                ),),
+                child: const Text(
+                  'Post',
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
               ),
-            
             )
           ],
         ),

@@ -31,17 +31,27 @@ class HomeScreen extends StatelessWidget {
       ),
 
       body:
-      StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+      StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').orderBy('datePublished',descending: true).snapshots(),
       builder:(context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){
 
+        if(snapshot.connectionState==ConnectionState.none){
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }else if(snapshot.data==null){
+          return const Center(
+            child: CircularProgressIndicator());
+        }
         if(snapshot.connectionState==ConnectionState.waiting){
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }else if(snapshot.hasError){
-          return const Center(
-            child: Text('Something went wrong'),
-          );
+        }
+
+        else if(snapshot.data!.docs.isEmpty){
+            return const Center(
+              child: Text('no recent posts',style: TextStyle(color: Colors.white),),
+            );
         }
 
         return ListView.builder(itemCount: snapshot.data!.docs.length,

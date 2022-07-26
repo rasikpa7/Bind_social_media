@@ -5,7 +5,8 @@ import 'package:bind/view/screens/ActivityScreen.dart';
 
 import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profileScreen/profileScreen.dart';
-import 'package:bind/view/screens/searchScreen.dart';
+import 'package:bind/view/screens/searchScreen/searchScreen.dart';
+import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';
 import 'package:bind/view/sighUpScreen/signUpScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

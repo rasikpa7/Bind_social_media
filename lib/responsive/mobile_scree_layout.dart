@@ -4,6 +4,7 @@ import 'package:bind/provider/user_provider.dart';
 import 'package:bind/view/screens/ActivityScreen.dart';
 
 import 'package:bind/view/screens/feedScreen/homeScreen.dart';
+import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/profileScreen/profileScreen.dart';
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
@@ -27,14 +28,14 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-int _currentIndex=0;
+int _currentIndex=4;
 
 final _pages=[
   HomeScreen(),
   SearchScreen(),
   AddImageScreen(),
   ActivityScreen(),
-  ProfileScreen()
+  Profile(uid: FirebaseAuth.instance.currentUser!.uid)
 ];
 
 

@@ -1,7 +1,8 @@
 import 'package:bind/model/user.dart'as Usermodel;
 import 'package:bind/provider/user_provider.dart';
+import 'package:bind/view/screens/profileScreen/widgets/currentUserPost.dart';
 import 'package:bind/view/screens/profileScreen/widgets/profileImage.dart';
-import 'package:bind/view/screens/screenwidgets/explore_grid.dart';
+import 'package:bind/view/screens/searchScreen/widgets/explore_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -35,8 +36,9 @@ class ProfileScreen extends StatelessWidget {
             Text(user.bio,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,fontStyle: FontStyle.italic),),
                 SizedBox(height: 10,),
 
-             Expanded(child: 
-             ExploreGrid())
+            //  Expanded(child: 
+             
+            //  UserPostGrid())
 
 
           

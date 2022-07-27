@@ -9,18 +9,19 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-class ExploreGrid extends StatelessWidget {
-  const ExploreGrid({Key? key}) : super(key: key);
+class UserPostGrid extends StatelessWidget {
+  final useruid;
+   UserPostGrid({Key? key,  required this.useruid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     
-  final model.User? user =Provider.of<UserProvider>(context).getUser;
+  // final model.User? user =Provider.of<UserProvider>(context).getUser;
 
     
     return
 
-    StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').where('uid',isEqualTo: user!.uid).snapshots(),
+    StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').where('uid',isEqualTo: useruid).snapshots(),
     builder: (context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){
 
           if(snapshot.connectionState==ConnectionState.waiting){
@@ -36,7 +37,7 @@ class ExploreGrid extends StatelessWidget {
           return Text('Something went wrong');
         }
 
-        return snapshot.data!.docs==null?
+        return snapshot.data!.docs.isEmpty?
         const Center(
           child: Text('No photos'),
         ):

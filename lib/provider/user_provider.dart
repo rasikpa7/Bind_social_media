@@ -37,10 +37,10 @@ Future<void> refreshUser() async {
   print('villichuuuuuuu');
   _user  =await _authMethods.getUserDetails();
  
-  log(_user!.photoUrl.toString());
+  // log(_user!.photoUrl.toString());
 
-  // log('message:$user');
-   debugPrint('testcheck: $_user');
+  // // log('message:$user');
+  //  debugPrint('testcheck: $_user');
   notifyListeners();
 }
 

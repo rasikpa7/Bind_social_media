@@ -3,6 +3,7 @@ import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
+import 'package:bind/utils/dimention.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:bind/view/sighUpScreen/signUpScreen.dart';
 import 'package:bind/view/widgets/text/fieldInput.dart';
@@ -19,55 +20,40 @@ import 'package:provider/provider.dart';
 class LogInScreen extends StatelessWidget {
   LogInScreen({Key? key}) : super(key: key);
 
- 
-
-
-
-
   final TextEditingController _emailcontroller = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
-  
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   _emailcontroller.dispose();
-  //   _passwordController.dispose();
-  // }
-  showLoaderDialog(BuildContext context){
-    AlertDialog alert=AlertDialog(
-      content: new Row(
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content:  Row(
         children: [
           CircularProgressIndicator(),
-          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
-        ],),
+          Container(
+              margin: EdgeInsets.only(left: 7.w), child: Text("Loading...")),
+        ],
+      ),
     );
-    showDialog(barrierDismissible: false,
-      context:context,
-      builder:(BuildContext context){
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
         return alert;
       },
     );
   }
-  
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
- bool isLoading =Provider.of<UserProvider>(context).isLoading;
-
-
-
+    bool isLoading = Provider.of<UserProvider>(context).isLoading;
 
     return Scaffold(
       body: SafeArea(
         child: ListView(
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3.5)
+              : EdgeInsets.symmetric(horizontal: 5.w),
           children: [
             Container(
               decoration: BoxDecoration(
@@ -136,11 +122,11 @@ class LogInScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               LogInUser(context);
-                              isLoading?showLoaderDialog(context):Container();
-                            
+                              isLoading
+                                  ? showLoaderDialog(context)
+                                  : Container();
                             },
-                            child: 
-                             const Text(
+                            child: const Text(
                               'LogIn',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
@@ -168,25 +154,26 @@ class LogInScreen extends StatelessWidget {
                                 color: Colors.white,
                               )),
                         ),
-                    
                       ],
                     ),
                     SizedBox(
                       height: 30.h,
                     ),
                     RichText(
-                        text:  TextSpan(
+                        text: TextSpan(
                       children: [
-                        TextSpan(
+                        const TextSpan(
                             text: 'Dont have account ?',
                             style: TextStyle(color: Colors.black)),
                         TextSpan(
                             text: 'sign Up',
                             recognizer: TapGestureRecognizer()
-                            ..onTap = (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>SignUpScreen() ,));
-                            },
-                            style: TextStyle(
+                              ..onTap = () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SignUpScreen(),
+                                ));
+                              },
+                            style: const TextStyle(
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.bold))
                       ],
@@ -199,35 +186,31 @@ class LogInScreen extends StatelessWidget {
         ),
       ),
     );
-    
   }
-      void LogInUser(BuildContext context)async{
-       
-  // isLoading=true;  
-  Provider.of<UserProvider>(context,listen: false).isLoadingValue(true);
 
-  String res= await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordController.text);
+  void LogInUser(BuildContext context) async {
+    // isLoading=true;
+    Provider.of<UserProvider>(context, listen: false).isLoadingValue(true);
 
-if(res=='success'){
-  
-  
- // isLoading=false;
-    Provider.of<UserProvider>(context,listen: false).isLoadingValue(false);
+    String res = await AuthMethods().loginUser(
+        email: _emailcontroller.text, password: _passwordController.text);
 
- showSnackBarr(res, context);
+    if (res == 'success') {
+      // isLoading=false;
+      Provider.of<UserProvider>(context, listen: false).isLoadingValue(false);
 
-   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const  ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),)));
+      showSnackBarr(res, context);
 
-}else{
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              )));
+    } else {
+      // isLoading=false;
+      Provider.of<UserProvider>(context, listen: false).isLoadingValue(false);
 
-  // isLoading=false;
-  Provider.of<UserProvider>(context,listen: false).isLoadingValue(false);
-
-
-  showSnackBarr(res, context);
-}
-  
-}
+      showSnackBarr(res, context);
+    }
+  }
 }

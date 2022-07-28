@@ -1,6 +1,6 @@
 import 'package:bind/model/user.dart'as Usermodel;
 import 'package:bind/provider/user_provider.dart';
-import 'package:bind/view/screens/profileScreen/widgets/currentUserPost.dart';
+
 import 'package:bind/view/screens/profileScreen/widgets/profileImage.dart';
 import 'package:bind/view/screens/searchScreen/widgets/explore_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             
-           
+         
          
              profilepic(),
         

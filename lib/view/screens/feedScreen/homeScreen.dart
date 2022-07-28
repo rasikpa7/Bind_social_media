@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
@@ -19,14 +20,14 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor:Colors.transparent ,
         elevation: 0,
-        title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Bind',style: TextStyle(fontStyle: FontStyle.italic,
+        title:   Text('Bind',style:GoogleFonts.dancingScript(
+              textStyle: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
               letterSpacing: 4,
-              color: Colors.white),),
-            Icon(Icons.message_outlined),
-          ],
-        ),
+              color: Colors.white)
+            ),),
+            centerTitle: true,
 
       ),
 
@@ -53,6 +54,7 @@ class HomeScreen extends StatelessWidget {
               child: Text('no recent posts',style: TextStyle(color: Colors.white),),
             );
         }
+        
 
         return ListView.builder(itemCount: snapshot.data!.docs.length,
           itemBuilder: ((context, index) {

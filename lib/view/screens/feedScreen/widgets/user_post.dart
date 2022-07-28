@@ -1,10 +1,12 @@
-import 'package:bind/model/user.dart';
+import 'package:bind/model/user.dart'as model ;
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
+import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 
 class UserPosts extends StatefulWidget {
   final snap;
+  bool isProfile=false;
   UserPosts({Key? key, required this.snap}) : super(key: key);
 
   @override
@@ -27,7 +30,10 @@ class _UserPostsState extends State<UserPosts> {
     // TODO: implement initState
     super.initState();
     getComments();
-  }
+widget.snap['uid']==FirebaseAuth.instance.currentUser!.uid ?
+widget.isProfile=true:
+widget.isProfile=false; 
+}
 
   void getComments() async {
     QuerySnapshot snap = await FirebaseFirestore.instance
@@ -54,8 +60,10 @@ class _UserPostsState extends State<UserPosts> {
   bool isLikeAnimation = false;
   @override
   Widget build(BuildContext context) {
+
       getComments();
-    final User? user = Provider.of<UserProvider>(context).getUser;
+    final model.User? user = Provider.of<UserProvider>(context).getUser;
+
     return Card(
       child: Column(
         children: [
@@ -64,26 +72,30 @@ class _UserPostsState extends State<UserPosts> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(widget.snap['profImage']),
-                              fit: BoxFit.cover),
-                          shape: BoxShape.circle),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      widget.snap['username'],
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
+                InkWell(
+                  onTap:(() =>  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile(uid: widget.snap['uid'])))),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(widget.snap['profImage']),
+                                fit: BoxFit.cover),
+                            shape: BoxShape.circle),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        widget.snap['username'],
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
                 ),
+                widget.isProfile?
                 IconButton(onPressed: ()async{
    showDialog(context: context,builder: (ctx)=>
    AlertDialog(title: Text('Delete Post'),
@@ -96,7 +108,8 @@ class _UserPostsState extends State<UserPosts> {
     const Icon(Icons.delete))
    ],
    ));
-                }, icon: const Icon(Icons.more_vert))
+                }, icon: const Icon(Icons.more_vert)):
+                SizedBox()
               ],
             ),
           ),
@@ -166,7 +179,12 @@ class _UserPostsState extends State<UserPosts> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
-                    child: Icon(Icons.chat_bubble_outline),
+                    child: IconButton(onPressed: (){
+                       Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            CommentsScreen(snap: widget.snap)));
+                    },
+                      icon: const Icon(Icons.chat_bubble_outline)),
                   ),
                   Icon(Icons.send),
                 ],

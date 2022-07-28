@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class ActivityScreen extends StatelessWidget {
-   ActivityScreen({Key? key}) : super(key: key);
+class MessagesScreen extends StatelessWidget {
+   MessagesScreen({Key? key}) : super(key: key);
   final List people=[
 'salsal','jafer',
 'kiran','karthik',

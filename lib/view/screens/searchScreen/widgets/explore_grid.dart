@@ -10,7 +10,7 @@ class ExploreCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Padding(
-  padding: const EdgeInsets.all(2.0),
+  padding: const EdgeInsets.all(0.0),
   child:   Card(
     child: Container(height: 500,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),

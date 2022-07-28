@@ -6,13 +6,14 @@ import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:lottie/lottie.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../../resources/auth_methods.dart';
+
 
 class AddImageScreen extends StatefulWidget {
   const AddImageScreen({Key? key}) : super(key: key);
@@ -129,8 +130,16 @@ Widget build(BuildContext context) {
 
     return _file==null?
 
-    Center(
-      child: IconButton(onPressed: ()=>_selectImage(context), icon: const Icon(Icons.upload)),
+    Column(mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+       
+          Lottie.network('https://assets2.lottiefiles.com/packages/lf20_GxMZME.json',
+          onLoaded: (p0) => const CircularProgressIndicator(),),
+           IconButton(onPressed: ()=>_selectImage(context), icon: const Icon(Icons.upload,size: 35,)),
+           Text('UPLOAD POST',
+           style: GoogleFonts.openSans())
+      
+      ],
     ):
     
      Scaffold(
@@ -138,7 +147,7 @@ Widget build(BuildContext context) {
         backgroundColor:Colors.black,
         leading: IconButton(onPressed: () {
           clearImage();
-        }, icon: Icon(Icons.arrow_back)),
+        }, icon: Icon(Icons.arrow_back_ios)),
         title: Text('Post to'),
         centerTitle: false,
         actions: [

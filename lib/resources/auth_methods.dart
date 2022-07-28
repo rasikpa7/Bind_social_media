@@ -106,4 +106,8 @@ Future<String> loginUser({
 
 
 }
+ Future<void> signOut()async{
+
+              await _auth.signOut();
+        }
 }

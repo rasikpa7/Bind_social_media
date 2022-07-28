@@ -4,6 +4,7 @@ import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
+import 'package:bind/utils/dimention.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
 
@@ -94,6 +95,10 @@ if(res!='success'){
     return Scaffold(
       body: SafeArea(
           child: ListView(
+            padding:  MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3.5)
+              : EdgeInsets.symmetric(horizontal: 5.w),
         children: [
           Padding(
             padding: EdgeInsets.all(18.0.r),
@@ -226,21 +231,7 @@ if(res!='success'){
                             color: Colors.white,
                           )),
                     ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Container(
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                          color: Colors.lightBlue,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: const FaIcon(
-                            FontAwesomeIcons.facebook,
-                            color: Colors.white,
-                          )),
-                    )
+                   
                   ],
                 ),
                 SizedBox(

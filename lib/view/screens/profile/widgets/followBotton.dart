@@ -20,7 +20,7 @@ class FollowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom:8.0),
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Container(
         width: 150,
         height: 40,
@@ -30,30 +30,15 @@ class FollowButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         alignment: Alignment.center,
-        child: TextButton(child: Text(text,
-       style: TextStyle(color: textColor, fontWeight: FontWeight.bold,
-         ) ), onPressed: function),
+        child: TextButton(
+            child: Text(text,
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                )),
+            onPressed: function),
       ),
     );
   }
 }
 
-// Container(
-//       padding: EdgeInsets.only(top: 20),
-//       child: TextButton(
-//           onPressed: function,
-//           child: Container(
-//             decoration: BoxDecoration(
-//               color: backgroundColor,
-//               border: Border.all(color: borderColor),
-//               borderRadius: BorderRadius.circular(5),
-//             ),
-//             alignment: Alignment.center,
-//             child: Text(
-//               text,
-//               style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-//             ),
-//           )),
-//       width: 100,
-//       height: 27,
-//     );

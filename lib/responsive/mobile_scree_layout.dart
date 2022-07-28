@@ -34,8 +34,8 @@ final _pages=[
   HomeScreen(),
   SearchScreen(),
   AddImageScreen(),
-  ActivityScreen(),
-  Profile(uid: FirebaseAuth.instance.currentUser!.uid)
+  MessagesScreen(),
+  Profile(uid: FirebaseAuth.instance.currentUser!.uid,)
 ];
 
 
@@ -67,7 +67,7 @@ final _pages=[
           backgroundColor: Colors.white),
               BottomNavigationBarItem(icon: Icon(Icons.add_circle),label: 'Add Post',
           backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'Activity',
+              BottomNavigationBarItem(icon: Icon(Icons.chat_bubble),label: 'Messsages',
           backgroundColor: Colors.white),
               BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile',
           backgroundColor: Colors.white),

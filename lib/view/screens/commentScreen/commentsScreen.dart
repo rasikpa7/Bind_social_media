@@ -4,8 +4,7 @@ import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/view/screens/commentScreen/widgets/commets_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 

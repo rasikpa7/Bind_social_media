@@ -190,7 +190,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-                      Divider(),
+                      const Divider(),
                     ],
                   ),
                 ),
@@ -207,6 +207,7 @@ class _ProfileState extends State<Profile> {
   }
 
   _Bottomsheet(BuildContext context, bool isFList, bool isFollowers) async {
+
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -221,79 +222,112 @@ class _ProfileState extends State<Profile> {
                       topLeft: Radius.circular(15.0),
                       topRight: Radius.circular(15.0))),
               child: isFList
-                  ? StreamBuilder(
+                  ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>?>(
                       stream: FirebaseFirestore.instance
                           .collection('users')
                           .where('uid',
                               isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                           .snapshots(),
-                      builder: (context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
+                      builder: (context,snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          const Center(
+                        return  const Center(
                             child: CircularProgressIndicator(),
                           );
-                        } else if (snapshot.data == null) {
-                          const Center(
+                        } else if (!snapshot.hasData ) {
+                        return  const Center(
                             child: CircularProgressIndicator(),
                           );
-                        }
-                        return ListView.builder(
-                            itemCount: 1,
+                        }else{
+                           return ListView.builder(
+                            itemCount:isFollowers?
+                             (snapshot.data?.docs[0]['followers'] as List).length:
+                              (snapshot.data?.docs[0]['following'] as List).length,
                             itemBuilder: (context, index) {
-                              // print(
-                              //     "---------------------------------${snapshot.data!.docs[index]["followers"][0]}");
-                              return StreamBuilder(
-                                  stream: isFollowers?
-                                  FirebaseFirestore.instance
-                                      .collection('users')
-                                      .where("uid",
-                                          isEqualTo: snapshot.data?.docs[index]
-                                              ["followers"][index])
-                                      .snapshots():
-                                      FirebaseFirestore.instance
-                                      .collection('users')
-                                      .where("uid",
-                                          isEqualTo: snapshot.data?.docs[index]
-                                              ["following"][index])
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<
-                                              QuerySnapshot<
-                                                  Map<String, dynamic>>>
-                                          snapshot1) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    } else if (snapshot.data!.docs == null) {
-                                      const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-                                    // log(snapshot1.data!.docs.toString());
-                                    return Card(
-                                      child: ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              snapshot1.data?.docs[index]
-                                                  ['photoUrl']),
-                                        ),
-                                        title: Text(snapshot1.data?.docs[index]
-                                            ['username']),
-                                      ),
+
+
+                              
+                              return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                                stream: isFollowers?
+                                FirebaseFirestore.instance.collection('users').doc(
+                                  (snapshot.data?.docs[0]['followers'] as List)[index].toString()
+                                ).snapshots():
+                                FirebaseFirestore.instance.collection('users').doc(
+                                  (snapshot.data?.docs[0]['following'] as List)[index].toString()
+                                ).snapshots(),
+                                builder: (context, snapshot) {
+
+                                  if(snapshot.connectionState==ConnectionState.waiting){
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
                                     );
-                                  });
+                                  }
+                                  if(!snapshot.hasData){
+                                    return const Center(
+                                      child: Text('no data'),
+                                    );
+                                  }
+                                  return ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(snapshot.data!.data()!['photoUrl'])
+                                    ),
+                                    // title: Text((snapshot.data?.docs[0]['followers'] as List)[index]),
+                                    title: Text(snapshot.data!.data()!['username']),
+                                  );
+                                }
+                              );
+                              // return StreamBuilder(
+                              //     stream: isFollowers
+                              //         ? FirebaseFirestore.instance
+                              //             .collection('users')
+                              //             .where("uid",
+                              //                 isEqualTo:
+                              //                     snapshot.data?.docs[index]
+                              //                         ["followers"][index])
+                              //             .snapshots()
+                              //         : FirebaseFirestore.instance
+                              //             .collection('users')
+                              //             .where("uid",
+                              //                 isEqualTo:
+                              //                     snapshot.data?.docs[index]
+                              //                         ["following"][index])
+                              //             .snapshots(),
+                              //     builder: (context,
+                              //         AsyncSnapshot<
+                              //                 QuerySnapshot<Map<String, dynamic>>>
+                              //             snapshot1) {
+                              //       if (snapshot.connectionState ==
+                              //           ConnectionState.waiting) {
+                              //         return const Center(
+                              //           child: CircularProgressIndicator(),
+                              //         );
+                              //       } else if (snapshot.data!.docs == null) {
+                              //         const Center(
+                              //           child: CircularProgressIndicator(),
+                              //         );
+                              //       }
+
+                              //       return Card(
+                              //         child: ListTile(
+                              //           leading: CircleAvatar(
+                              //             backgroundImage: NetworkImage(
+                              //                 snapshot1.data?.docs[index]
+                              //                     ['photoUrl']),
+                              //           ),
+                              //           title: Text(snapshot1.data?.docs[index]
+                              //               ['username']),
+                              //         ),
+                              //       );
+                              //     });
                             });
+                        }
+                       
                       })
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Do You Want To Signout?',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
@@ -305,7 +339,7 @@ class _ProfileState extends State<Profile> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('Cancel')),
+                                child: const Text('Cancel')),
                             SizedBox(
                               width: 50.w,
                             ),

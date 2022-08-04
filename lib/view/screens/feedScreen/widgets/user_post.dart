@@ -120,7 +120,7 @@ widget.isProfile=false;
               setState(() {
                 isLikeAnimation = true;
               });
-            },
+            },  
             child: Stack(
               alignment: Alignment.center,
               children: [

@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           const SizedBox(
                             width: 25,
-                          ),
+                          ), 
                           InkWell(
                             onTap: () async {
                               if (userData['uid'] == user!.uid) {
@@ -276,49 +276,7 @@ class _ProfileState extends State<Profile> {
                                   );
                                 }
                               );
-                              // return StreamBuilder(
-                              //     stream: isFollowers
-                              //         ? FirebaseFirestore.instance
-                              //             .collection('users')
-                              //             .where("uid",
-                              //                 isEqualTo:
-                              //                     snapshot.data?.docs[index]
-                              //                         ["followers"][index])
-                              //             .snapshots()
-                              //         : FirebaseFirestore.instance
-                              //             .collection('users')
-                              //             .where("uid",
-                              //                 isEqualTo:
-                              //                     snapshot.data?.docs[index]
-                              //                         ["following"][index])
-                              //             .snapshots(),
-                              //     builder: (context,
-                              //         AsyncSnapshot<
-                              //                 QuerySnapshot<Map<String, dynamic>>>
-                              //             snapshot1) {
-                              //       if (snapshot.connectionState ==
-                              //           ConnectionState.waiting) {
-                              //         return const Center(
-                              //           child: CircularProgressIndicator(),
-                              //         );
-                              //       } else if (snapshot.data!.docs == null) {
-                              //         const Center(
-                              //           child: CircularProgressIndicator(),
-                              //         );
-                              //       }
-
-                              //       return Card(
-                              //         child: ListTile(
-                              //           leading: CircleAvatar(
-                              //             backgroundImage: NetworkImage(
-                              //                 snapshot1.data?.docs[index]
-                              //                     ['photoUrl']),
-                              //           ),
-                              //           title: Text(snapshot1.data?.docs[index]
-                              //               ['username']),
-                              //         ),
-                              //       );
-                              //     });
+                       
                             });
                         }
                        

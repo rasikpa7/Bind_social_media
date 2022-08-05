@@ -2,7 +2,7 @@ import 'package:bind/provider/user_provider.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
-import 'package:bind/utils/dimention.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

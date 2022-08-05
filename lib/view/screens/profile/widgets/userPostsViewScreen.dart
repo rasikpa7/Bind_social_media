@@ -6,8 +6,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class UserPostViewScreen extends StatelessWidget {
-  final usersnap;
-  const UserPostViewScreen({Key? key, this.usersnap}) : super(key: key);
+  final uid;
+  const UserPostViewScreen({Key? key, this.uid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class UserPostViewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Posts')),
 
-      body: StreamBuilder (stream: FirebaseFirestore.instance.collection('posts').where('uid',isEqualTo: usersnap['uid']).
+      body: StreamBuilder (stream: FirebaseFirestore.instance.collection('posts').where('uid',isEqualTo: uid).
       snapshots(),
      
       builder: (context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){

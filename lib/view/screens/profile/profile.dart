@@ -6,6 +6,7 @@ import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
+import 'package:bind/view/screens/profile/widgets/editBioSheet.dart';
 import 'package:bind/view/screens/profile/widgets/followBotton.dart';
 import 'package:bind/view/screens/profile/widgets/userPostsViewScreen.dart';
 
@@ -18,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'widgets/editProfileImageBottomSheet.dart';
 
 class Profile extends StatefulWidget {
   final uid;
@@ -72,13 +75,25 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+  final currentLUser=  Provider.of<UserProvider>(context,listen: false);
+    final imageFile=  Provider.of<UserProvider>(context).file;
     final model.User? user = Provider.of<UserProvider>(context).getUser;
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
+    return 
+        // ? const Center(child: CircularProgressIndicator())
+        StreamBuilder(stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .snapshots(),
+          builder: (context,AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) => 
+          snapshot.connectionState==ConnectionState.waiting?
+
+          const Center(child: CircularProgressIndicator(),):
+
+        
+         Scaffold(
             appBar: AppBar(
               title: Text(
-                userData['username'],
+                snapshot.data!.data()!['username'],
                 style: GoogleFonts.sourceCodePro(),
               ),
             ),
@@ -92,9 +107,54 @@ class _ProfileState extends State<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          FirebaseAuth.instance.currentUser!.uid == widget.uid?
+                           Stack(
+                             children: [
+                               CircleAvatar(
+                                radius: 70,
+                                backgroundImage: NetworkImage(snapshot.data!.data()!['photoUrl'])),
+                                Positioned(
+                                  bottom: 1,
+                                  right: 1,
+                                  child: 
+                                Container( 
+                                  height: 35,
+                                  width: 35,
+                                  
+                                  decoration: BoxDecoration(
+
+                                    color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50)),
+                                  child: IconButton(onPressed: ()async{
+
+                                    await currentLUser.selectImage(context);
+
+
+                                    // print(currentLUser.file.toString());
+                                  //  if( currentLUser.file!=null){
+                                  //    // ignore: use_build_context_synchronously
+                                 
+                                  //  }
+                                  Bottomsheet().EditProfilePic(context, );
+                                 
+                                    
+
+                                  }, icon: const Icon(Icons.add_a_photo,
+                                  size: 18,))
+                                ))
+                                
+                             ],
+                           ):
+
                           CircleAvatar(
+                            
                             radius: 70,
-                            backgroundImage: NetworkImage(userData['photoUrl']),
+                            backgroundColor: Colors.grey,
+                            backgroundImage:
+                            // snapshot.data!.data()!['photoUrl']?
+                            //  NetworkImage('https://pic.onlinewebfonts.com/svg/img_569204.png'):
+                            
+                             NetworkImage(snapshot.data!.data()!['photoUrl'])
                           ),
                           FirebaseAuth.instance.currentUser!.uid == widget.uid
                               ? FollowButton(
@@ -114,7 +174,7 @@ class _ProfileState extends State<Profile> {
                                         await FireStoreMethods().followUser(
                                             uid: FirebaseAuth
                                                 .instance.currentUser!.uid,
-                                            followId: userData['uid']);
+                                            followId: snapshot.data!.data()!['uid']);
                                         setState(() {
                                           isFollowing = false;
                                         });
@@ -128,7 +188,7 @@ class _ProfileState extends State<Profile> {
                                         await FireStoreMethods().followUser(
                                             uid: FirebaseAuth
                                                 .instance.currentUser!.uid,
-                                            followId: userData['uid']);
+                                            followId: snapshot.data!.data()!['uid']);
 
                                         setState(() {
                                           isFollowing = true;
@@ -149,24 +209,24 @@ class _ProfileState extends State<Profile> {
                           ),
                           InkWell(
                             onTap: () async {
-                              if (userData['uid'] == user!.uid) {
+                              if (snapshot.data!.data()!['uid']== user!.uid) {
                                 await _Bottomsheet(context, true, true);
                               }
                             },
                             child: buildStatColum(
-                                userData['followers'].length, 'Followers'),
+                                snapshot.data!.data()!['followers'].length, 'Followers'),
                           ),
                           const SizedBox(
                             width: 25,
-                          ), 
+                          ),
                           InkWell(
                             onTap: () async {
-                              if (userData['uid'] == user!.uid) {
+                              if (snapshot.data!.data()!['uid'] == user!.uid) {
                                 await _Bottomsheet(context, true, false);
                               }
                             },
                             child: buildStatColum(
-                                userData['following'].length, 'Following'),
+                                snapshot.data!.data()!['following'].length, 'Following'),
                           )
                         ],
                       ),
@@ -175,7 +235,7 @@ class _ProfileState extends State<Profile> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            userData['username'],
+                            snapshot.data!.data()!['username'],
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -184,10 +244,26 @@ class _ProfileState extends State<Profile> {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            userData['bio'],
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          ),
+                          child:  FirebaseAuth.instance.currentUser!.uid == widget.uid?
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(context: context, builder: (context) {
+                                return EditBioSheet();
+
+                              },);
+                            },
+                            child:
+                              snapshot.data!.data()!['bio']==''?
+                              Text('Add Bio',style: TextStyle(color: Colors.grey,
+                              fontSize: 15),): Text(
+                              snapshot.data!.data()!['bio'],
+                              
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                          ):Text(
+                              snapshot.data!.data()!['bio'],
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
                         ),
                       ),
                       const Divider(),
@@ -199,15 +275,15 @@ class _ProfileState extends State<Profile> {
                         onTap: (() => Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    UserPostViewScreen(usersnap: userData)))),
+                                    UserPostViewScreen(uid: widget.uid,)))),
                         child: UserPostGrid(useruid: widget.uid)))
               ],
             ),
+         )
           );
   }
 
   _Bottomsheet(BuildContext context, bool isFList, bool isFollowers) async {
-
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -228,58 +304,59 @@ class _ProfileState extends State<Profile> {
                           .where('uid',
                               isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                           .snapshots(),
-                      builder: (context,snapshot) {
+                      builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                        return  const Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        } else if (!snapshot.hasData ) {
-                        return  const Center(
+                        } else if (!snapshot.hasData) {
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        }else{
-                           return ListView.builder(
-                            itemCount:isFollowers?
-                             (snapshot.data?.docs[0]['followers'] as List).length:
-                              (snapshot.data?.docs[0]['following'] as List).length,
-                            itemBuilder: (context, index) {
-
-
-                              
-                              return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                                stream: isFollowers?
-                                FirebaseFirestore.instance.collection('users').doc(
-                                  (snapshot.data?.docs[0]['followers'] as List)[index].toString()
-                                ).snapshots():
-                                FirebaseFirestore.instance.collection('users').doc(
-                                  (snapshot.data?.docs[0]['following'] as List)[index].toString()
-                                ).snapshots(),
-                                builder: (context, snapshot) {
-
-                                  if(snapshot.connectionState==ConnectionState.waiting){
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  if(!snapshot.hasData){
-                                    return const Center(
-                                      child: Text('no data'),
-                                    );
-                                  }
-                                  return ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundImage: NetworkImage(snapshot.data!.data()!['photoUrl'])
-                                    ),
-                                    // title: Text((snapshot.data?.docs[0]['followers'] as List)[index]),
-                                    title: Text(snapshot.data!.data()!['username']),
-                                  );
-                                }
-                              );
-                       
-                            });
+                        } else {
+                          return ListView.builder(
+                              itemCount: isFollowers
+                                  ? (snapshot.data?.docs[0]['followers']
+                                          as List)
+                                      .length
+                                  : (snapshot.data?.docs[0]['following']
+                                          as List)
+                                      .length,
+                              itemBuilder: (context, index) {
+                                return StreamBuilder<
+                                        DocumentSnapshot<Map<String, dynamic>?>?>(
+                                    stream: isFollowers
+                                        ? FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc((snapshot.data?.docs[0]
+                                                        ['followers']
+                                                    as List)[index]
+                                                .toString())
+                                            .snapshots()
+                                        : FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc((snapshot.data?.docs[0]
+                                                        ['following']
+                                                    as List)[index]
+                                                .toString())
+                                            .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                      if (snapshot.data!.data()!.isEmpty) {
+                                        return const Center(
+                                          child: Text('no data',style:TextStyle(color: Colors.black),),
+                                        );
+                                      }
+                                      return FListWidget(snapshot: snapshot,isFollowers: isFollowers,);
+                                    });
+                              });
                         }
-                       
                       })
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -340,4 +417,64 @@ class _ProfileState extends State<Profile> {
   final kwidth = const SizedBox(
     width: 20,
   );
+}
+
+
+class FListWidget extends StatelessWidget {
+bool isFollowers;
+  AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>?>?> snapshot;
+   FListWidget({
+    Key? key,required this.snapshot, required this.isFollowers
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final currentUser=Provider.of<UserProvider>(context).getUser;
+    return 
+
+    Dismissible(
+      onDismissed: (dismiss)async{
+        await FireStoreMethods().followUser(uid: currentUser!.uid, followId: snapshot.data!.data()!['uid']);
+        
+      },
+        background: Padding(
+        padding: const EdgeInsets.all(5.0),
+        
+        child: Container(height: 100,
+          decoration: BoxDecoration(
+             color: Theme.of(context).errorColor,
+            borderRadius: BorderRadius.circular(5)
+          ),
+          child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Remove User  '.toUpperCase(),style:const  TextStyle(color: Colors.white),),
+             const  Icon(Icons.delete,color: Colors.white,)
+            ],
+          ),),
+         
+        ),
+      ),
+
+      key: ValueKey(snapshot.data!.data()!['uid']),
+      child: snapshot.data!.data()!.length==0?
+       const Center(child: Text('No data',
+       style: TextStyle(color: Colors.black),),):
+      Card(
+        color: Colors.blue,
+        child: ListTile(
+          
+          leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  snapshot.data!
+                      .data()!['photoUrl'])),
+        
+          title: Text(
+              snapshot.data!.data()!['username'],style: TextStyle(fontSize: 18,
+              color: Colors.white)
+              ),
+        ),
+      ),
+    );
+  
+  }
 }

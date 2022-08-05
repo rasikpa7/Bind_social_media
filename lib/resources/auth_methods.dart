@@ -43,7 +43,7 @@ class AuthMethods {
           bio.isEmpty ||
           file != null) {
         //register user
-        if (isGoogle) {}
+        
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 

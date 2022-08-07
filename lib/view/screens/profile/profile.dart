@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:bind/model/user.dart' as model;
 import 'package:bind/provider/user_provider.dart';
@@ -49,6 +50,7 @@ class _ProfileState extends State<Profile> {
     setState(() {
       isLoading = true;
     });
+ 
 
     try {
       var snap = await FirebaseFirestore.instance
@@ -147,7 +149,7 @@ class _ProfileState extends State<Profile> {
                            ):
 
                           CircleAvatar(
-                            
+                             
                             radius: 70,
                             backgroundColor: Colors.grey,
                             backgroundImage:
@@ -434,7 +436,7 @@ bool isFollowers;
 
     Dismissible(
       onDismissed: (dismiss)async{
-        await FireStoreMethods().followUser(uid: currentUser!.uid, followId: snapshot.data!.data()!['uid']);
+        await FireStoreMethods().followUser(uid: currentUser!.uid!, followId: snapshot.data!.data()!['uid']);
         
       },
         background: Padding(
@@ -455,7 +457,7 @@ bool isFollowers;
         ),
       ),
 
-      key: ValueKey(snapshot.data!.data()!['uid']),
+      key: ObjectKey(snapshot.data!.data()!['uid']),
       child: snapshot.data!.data()!.length==0?
        const Center(child: Text('No data',
        style: TextStyle(color: Colors.black),),):

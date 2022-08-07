@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:bind/provider/google_signIn_Provider.dart';
+import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
@@ -17,6 +19,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/userSignUp_provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -34,9 +39,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final TextEditingController _bioController = TextEditingController();
 
-  Uint8List? _image;
+  Uint8List? image;
 
-  bool _isLoading=false;
+  bool isLoading= false;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -47,58 +52,71 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _bioController.dispose();
   }
 
+    Future<String> signUpUser({
+    required TextEditingController email,
+    required TextEditingController password,
+    required TextEditingController username,
+    required TextEditingController bio,
+    required Uint8List imageFile,
+  }) async {
+    // if(email.text.isEmpty||password.text.isEmpty||username.text.isEmpty||bio.text.isEmpty
+    // ||imageFile.isEmpty){
+    //   showSnackBarr('enter all fields', context);
+      
+    // }
+    setState(() {
+      isLoading=true;
+      
+    });
+    
+ 
+    String res = await AuthMethods().signUpUser(
+       
+        email: email.text.trim(),
+        password: password.text.trim(),
+        username: username.text.trim(),
+        bio: bio.text.trim(),
+        file: imageFile);
+ 
+       setState(() {
+          isLoading=false;
+       });
+    
+        return res;
+
+  
+  
+  }
   void selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      _image = im;
+      image = im;
     });
   }
-    showLoaderDialog(BuildContext context){
-    AlertDialog alert=AlertDialog(
-      content: new Row(
-        children: [
-          CircularProgressIndicator(),
-          Container(margin: EdgeInsets.only(left: 7),child:Text("Loading..." )),
-        ],),
-    );
-    }
 
-  void signUpUser()async{
-
-    setState(() {
-      _isLoading=true;
-    });
-       String res= await AuthMethods().signUpUser(isGoogle: false,
-                              email: _emailcontroller.text.trim(),
-                              password: _passwordController.text.trim(),
-                              username: _usernamecontroller.text.trim(),
-                              bio: _bioController.text,
-                              file: _image!);
-
-
-if(res!='success'){
-  showSnackBarr(res, context);
-  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const  ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-   ) ));
-
-}
- showSnackBarr(res, context);
- setState(() {
-      _isLoading=false;
-    });
-  }
+  // showLoaderDialog(BuildContext context) {
+  //   AlertDialog alert = AlertDialog(
+  //     content: new Row(
+  //       children: [
+  //         CircularProgressIndicator(),
+  //         Container(
+  //             margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final signUpProvider = Provider.of<SignUpProvider>(context, listen: false);
+    final googleUser=Provider.of<GoogleSignInProvider>(context);
     return Scaffold(
       body: SafeArea(
           child: ListView(
-            padding:  MediaQuery.of(context).size.width > webScreenSize
-              ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3.5)
-              : EdgeInsets.symmetric(horizontal: 5.w),
+        padding: MediaQuery.of(context).size.width > webScreenSize
+            ? EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 3.5)
+            : EdgeInsets.symmetric(horizontal: 5.w),
         children: [
           Padding(
             padding: EdgeInsets.all(18.0.r),
@@ -119,14 +137,15 @@ if(res!='success'){
                 SizedBox(
                   height: 25.h,
                 ),
+                
                 Stack(
                   children: [
-                    _image != null
+                    image != null
                         ? CircleAvatar(
                             radius: 50,
-                            backgroundImage: MemoryImage(_image!),
+                            backgroundImage: MemoryImage(image!),
                           )
-                        : CircleAvatar(
+                        : const CircleAvatar(
                             radius: 50,
                             backgroundImage: NetworkImage(
                                 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
@@ -136,11 +155,13 @@ if(res!='success'){
                         left: 55,
                         child: IconButton(
                             onPressed: () async {
-                              selectImage();
+                               selectImage();
                             },
                             icon: const Icon(Icons.add_a_photo)))
                   ],
                 ),
+                //   }
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -196,14 +217,47 @@ if(res!='success'){
                         style: ElevatedButton.styleFrom(
                           primary: Colors.teal,
                         ),
-                        onPressed: () async{
-                              signUpUser();
-                                 _isLoading?showLoaderDialog(context):Container();
+                        onPressed: () async {
+                          // final res = signUpProvider.
+                      if(_emailcontroller.text.isEmpty||
+                      _passwordController.text.isEmpty||
+                      _usernamecontroller.text.isEmpty||
+                      _bioController.text.isEmpty){
+                        showSnackBarr('please enter all fields', context);
+                        return;
+                      }
+                         final res=await signUpUser(
+                            email: _emailcontroller,
+                            password: _passwordController,
+                            username: _usernamecontroller,
+                            bio: _bioController,
+                            imageFile: image!
+                          );
+                          if (res == 'success') {
+                            showSnackBarr(res.toString(), context);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ResponsiveLayout(
+                                          mobileScreenLayout:
+                                              MobileScreenLayout(),
+                                          webScreenLayout: WebScreenLayout(),
+                                        )));
+                          }  
+                           
+                           
+                          showSnackBarr(res.toString(), context);
                           
-                     
+                   
+                          signUpProvider.clearImageFile();
                         },
-                        child:
-                         const Text(
+                        child:  isLoading? 
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ):
+                        Text(
                           'Sign Up',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
@@ -216,6 +270,8 @@ if(res!='success'){
                 SizedBox(
                   height: 10.h,
                 ),
+                isLoading?
+                SizedBox():
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -225,13 +281,28 @@ if(res!='success'){
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(15.r)),
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: ()async {
+                          final res=  await googleUser.googleSignUP(context);
+                            if (res == 'success') {
+                            showSnackBarr(res.toString(), context);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ResponsiveLayout(
+                                          mobileScreenLayout:
+                                              MobileScreenLayout(),
+                                          webScreenLayout: WebScreenLayout(),
+                                        )));
+                          }  
+                           
+                           
+                          showSnackBarr(res.toString(), context);
+                          },
                           icon: const FaIcon(
                             FontAwesomeIcons.google,
                             color: Colors.white,
                           )),
                     ),
-                   
                   ],
                 ),
                 SizedBox(
@@ -245,9 +316,12 @@ if(res!='success'){
                         style: TextStyle(color: Colors.black)),
                     TextSpan(
                         text: ' Log In',
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>LogInScreen() ,));
-                        },
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LogInScreen(),
+                            ));
+                          },
                         style: TextStyle(
                             color: Colors.blueAccent,
                             fontWeight: FontWeight.bold))
@@ -260,6 +334,4 @@ if(res!='success'){
       )),
     );
   }
-  
- 
 }

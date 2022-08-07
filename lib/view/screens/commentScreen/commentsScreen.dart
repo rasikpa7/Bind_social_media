@@ -67,8 +67,8 @@ class CommentsScreen extends StatelessWidget {
                 await FireStoreMethods().postComment(
                     snap['postId'],
                     _textController.text,
-                    user.uid,
-                    user.username,
+                    user.uid!,
+                    user.username!,
                     user.photoUrl!);
                 _textController.clear();
               },

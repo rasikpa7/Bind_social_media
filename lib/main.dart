@@ -1,8 +1,9 @@
+import 'package:bind/provider/google_signIn_Provider.dart';
+import 'package:bind/provider/userSignUp_provider.dart';
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
 import 'package:bind/responsive/responsive_layout_screen.dart';
 import 'package:bind/responsive/web_screen_layout.dart';
-
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,11 +41,15 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => SignUpProvider()),
+          ChangeNotifierProvider(create: (_) => GoogleSignInProvider())
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            appBarTheme: AppBarTheme(color: Colors.black),
+              appBarTheme: AppBarTheme(color: Colors.black),
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: const Color(0XFFEFF3F6)),
           home: StreamBuilder(
@@ -56,9 +61,14 @@ class MyApp extends StatelessWidget {
                     mobileScreenLayout: MobileScreenLayout(),
                     webScreenLayout: WebScreenLayout(),
                   );
-                } else if (snapshot.hasError) {
+                } 
+                else if (snapshot.hasError) {
                   return Center(child: Text(snapshot.error.toString()));
                 }
+              }
+              else if(snapshot.connectionState==ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),);
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

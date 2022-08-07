@@ -33,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
          
              profilepic(),
         
-            Text(user.bio,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,fontStyle: FontStyle.italic),),
+            Text(user.bio!,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,fontStyle: FontStyle.italic),),
                 SizedBox(height: 10,),
 
             //  Expanded(child: 

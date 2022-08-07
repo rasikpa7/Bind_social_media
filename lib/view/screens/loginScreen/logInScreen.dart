@@ -1,3 +1,4 @@
+import 'package:bind/provider/google_signIn_Provider.dart';
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/responsive/mobile_scree_layout.dart';
@@ -46,6 +47,7 @@ class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isLoading = Provider.of<UserProvider>(context).isLoading;
+    final googleUser=Provider.of<GoogleSignInProvider>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -148,7 +150,20 @@ class LogInScreen extends StatelessWidget {
                               color: Colors.teal,
                               borderRadius: BorderRadius.circular(15.r)),
                           child: IconButton(
-                              onPressed: () {},
+                              onPressed: ()async {
+                            final res= await     googleUser.googleLogIN(context);
+                            if(res=='success'){
+                                    Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ResponsiveLayout(
+                                          mobileScreenLayout:
+                                              MobileScreenLayout(),
+                                          webScreenLayout: WebScreenLayout(),
+                                        )));
+                            }
+                              
+                              },
                               icon: const FaIcon(
                                 FontAwesomeIcons.google,
                                 color: Colors.white,

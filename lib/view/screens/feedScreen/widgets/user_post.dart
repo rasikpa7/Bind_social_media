@@ -116,7 +116,7 @@ widget.isProfile=false;
           GestureDetector(
             onDoubleTap: () async {
               FireStoreMethods().likePost(
-                  widget.snap['postId'], user!.uid, widget.snap['likes']);
+                  widget.snap['postId'], user!.uid!, widget.snap['likes']);
               setState(() {
                 isLikeAnimation = true;
               });
@@ -173,7 +173,7 @@ widget.isProfile=false;
                             ),
                       onPressed: () async {
                         FireStoreMethods().likePost(widget.snap['postId'],
-                            user!.uid, widget.snap['likes']);
+                            user!.uid!, widget.snap['likes']);
                       },
                     ),
                   ),

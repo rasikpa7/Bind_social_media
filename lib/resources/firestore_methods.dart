@@ -113,19 +113,19 @@ class FireStoreMethods {
       );
 
     }
-    else if(followers.contains(followId)){
-         await _firestore.collection('users').doc(uid).update(
-        {
-          'followers':FieldValue.arrayRemove([followId])
-        }
-      );
-      await _firestore.collection('users').doc(followId).update(
-        {
-          'following':FieldValue.arrayRemove([uid])
-        }
-      );
+    // else if(followers.contains(followId)){
+    //      await _firestore.collection('users').doc(uid).update(
+    //     {
+    //       'followers':FieldValue.arrayRemove([followId])
+    //     }
+    //   );
+    //   await _firestore.collection('users').doc(followId).update(
+    //     {
+    //       'following':FieldValue.arrayRemove([uid])
+    //     }
+    //   );
 
-    }
+    // }
     else{
 
         await _firestore.collection('users').doc(followId).update(

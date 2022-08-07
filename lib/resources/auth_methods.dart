@@ -34,7 +34,8 @@ class AuthMethods {
       required String username,
       required String bio,
       required Uint8List file,
-      required bool isGoogle}) async {
+      // required bool isGoogle
+      }) async {
     String res = 'Some error occured';
     try {
       if (email.isEmpty ||

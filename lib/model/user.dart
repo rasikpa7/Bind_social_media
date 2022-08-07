@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class User {
-  final String email;
-  final String uid;
+  final String? email;
+  final String? uid;
   final String? photoUrl;
-  final String username;
-  final String bio;
-  final dynamic followers;
-  final dynamic following;
+  final String? username;
+  final String? bio;
+  final dynamic? followers;
+  final dynamic? following;
 
   User(
       {required this.email,
@@ -29,8 +29,8 @@ class User {
         "following": following
       };
 
-  static User  fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  static User  fromSnap(DocumentSnapshot? snap) {
+    var snapshot = snap?.data() as Map<String, dynamic>;
     debugPrint('movieTitlesecond: $snapshot');
     // print(snapshot['PhotoUrl'])
 

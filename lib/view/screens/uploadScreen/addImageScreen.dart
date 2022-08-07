@@ -153,7 +153,7 @@ Widget build(BuildContext context) {
         actions: [
           TextButton(
               onPressed: () {
-                postImage(user!.uid, user.username, user.photoUrl!);
+                postImage(user!.uid!, user.username!, user.photoUrl!);
               },
               child: const Text(
                 'Post',

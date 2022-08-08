@@ -13,10 +13,19 @@ class GoogleSignInProvider with ChangeNotifier{
   GoogleSignInAccount ? _user;
 
   GoogleSignInAccount get user => _user!;
+  
+  bool isLoading=false;
+
+  void isLoadingValue(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
 
   Future <String>googleLogIN(BuildContext context)async{
-
+     isLoading=true;
+     notifyListeners();
     try{
+
 
        final googleUser=await googleSignIn.signIn();
     if(googleUser==null) {return 'No user found';}
@@ -31,8 +40,9 @@ class GoogleSignInProvider with ChangeNotifier{
 
     final googleUsercred=await FirebaseAuth.instance.signInWithCredential(credential);
     
-   
-    notifyListeners();
+    isLoading=false;
+     notifyListeners();
+    
 
     return 'success';
 

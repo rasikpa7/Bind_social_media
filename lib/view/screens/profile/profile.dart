@@ -12,6 +12,7 @@ import 'package:bind/view/screens/profile/widgets/followBotton.dart';
 import 'package:bind/view/screens/profile/widgets/userPostsViewScreen.dart';
 
 import 'package:bind/view/screens/profileScreen/widgets/currentUserPost.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -114,7 +115,11 @@ class _ProfileState extends State<Profile> {
                              children: [
                                CircleAvatar(
                                 radius: 70,
-                                backgroundImage: NetworkImage(snapshot.data!.data()!['photoUrl'])),
+                           
+                                backgroundImage:
+
+                                 NetworkImage(snapshot.data!.data()!['photoUrl'])
+                                ),
                                 Positioned(
                                   bottom: 1,
                                   right: 1,
@@ -153,9 +158,7 @@ class _ProfileState extends State<Profile> {
                             radius: 70,
                             backgroundColor: Colors.grey,
                             backgroundImage:
-                            // snapshot.data!.data()!['photoUrl']?
-                            //  NetworkImage('https://pic.onlinewebfonts.com/svg/img_569204.png'):
-                            
+                         
                              NetworkImage(snapshot.data!.data()!['photoUrl'])
                           ),
                           FirebaseAuth.instance.currentUser!.uid == widget.uid

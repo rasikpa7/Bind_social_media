@@ -79,7 +79,7 @@ widget.isProfile=false;
                       Container(
                         width: 40,
                         height: 40,
-                        decoration: BoxDecoration(
+                        decoration:  BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(widget.snap['profImage']),
                                 fit: BoxFit.cover),

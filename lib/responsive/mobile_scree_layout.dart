@@ -1,7 +1,7 @@
 import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
 
-import 'package:bind/view/screens/ActivityScreen.dart';
+import 'package:bind/view/screens/messageScreen/MessagingScreen.dart';
 
 import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
@@ -28,7 +28,7 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-int _currentIndex=0;
+int _currentIndex=3;
 
 final _pages=[
   HomeScreen(),

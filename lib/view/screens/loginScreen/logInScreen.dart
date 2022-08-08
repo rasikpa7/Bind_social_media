@@ -124,11 +124,13 @@ class LogInScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               LogInUser(context);
-                              isLoading
-                                  ? showLoaderDialog(context)
-                                  : Container();
+                              
+                                 
                             },
-                            child: const Text(
+                            child: isLoading?
+                            Center(child: 
+                            CircularProgressIndicator(),):
+                             Text(
                               'LogIn',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
@@ -164,7 +166,11 @@ class LogInScreen extends StatelessWidget {
                             }
                               
                               },
-                              icon: const FaIcon(
+                              icon: isLoading?
+                              const Center(
+                                child: CircularProgressIndicator(),
+                              ):
+                              const FaIcon(
                                 FontAwesomeIcons.google,
                                 color: Colors.white,
                               )),

@@ -1,3 +1,5 @@
+import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,39 +25,7 @@ class MessagesScreen extends StatelessWidget {
                 right: 5,
               ),
               height: 100,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('users').snapshots(),
-                builder: ((context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (!snapshot.hasData) {
-                    const Center(
-                      child: Text('No users'),
-                    );
-                  } else if (snapshot.hasError) {
-                    const Center(
-                      child: Text('Something wentwrong'),
-                    );
-                  }
-                  return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: ((context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(5.0),
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: NetworkImage(
-                                snapshot.data!.docs[index]['photoUrl']),
-                          ),
-                        );
-                      }));
-                }),
-              )),
+              child: ChatHeaderWidjet()),
           Expanded(
               child: Container(
             decoration: BoxDecoration(
@@ -66,6 +36,65 @@ class MessagesScreen extends StatelessWidget {
           ))
         ],
       ),
+    );
+  }
+}
+
+class ChatHeaderWidjet extends StatelessWidget {
+  const ChatHeaderWidjet({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('users').snapshots(),
+      builder: ((context,
+        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+              snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (!snapshot.hasData) {
+          const Center(
+            child: Text('No users'),
+          );
+        } else if (snapshot.hasError) {
+          const Center(
+            child: Text('Something wentwrong'),
+          );
+        }
+        return ListView.builder(
+          physics: BouncingScrollPhysics(),
+          cacheExtent: 100000,
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: ((context, index) {
+              return Container(
+                margin: EdgeInsets.all(5.0),
+                child:
+                 InkWell(
+                  
+                  
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
+                    ChatScreen(snap: snapshot.data!.docs[index],)));
+
+                  },
+
+                   child: CircleAvatar(
+                        backgroundColor: Colors.grey[400],
+                    radius: 30,
+                    backgroundImage: CachedNetworkImageProvider(snapshot.data!.docs[index]['photoUrl'])
+                     
+                       
+                                
+                                 ),
+                 ),
+              );
+            }));
+      }),
     );
   }
 }

@@ -38,6 +38,7 @@ class UserPostGrid extends StatelessWidget {
           child: Text('No photos'),
         ):
              GridView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: snapshot.data!.docs.length,
   
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

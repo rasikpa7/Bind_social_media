@@ -5,7 +5,7 @@ import 'package:bind/view/screens/messageScreen/MessagingScreen.dart';
 
 import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
-import 'package:bind/view/screens/profileScreen/profileScreen.dart';
+
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';

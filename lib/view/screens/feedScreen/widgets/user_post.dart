@@ -1,10 +1,11 @@
-import 'package:bind/model/user.dart'as model ;
+import 'package:bind/model/user.dart' as model;
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/utils/utils.dart';
 import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class UserPosts extends StatefulWidget {
   final snap;
-  bool isProfile=false;
+  bool isProfile = false;
   UserPosts({Key? key, required this.snap}) : super(key: key);
 
   @override
@@ -30,10 +31,10 @@ class _UserPostsState extends State<UserPosts> {
     // TODO: implement initState
     super.initState();
     getComments();
-widget.snap['uid']==FirebaseAuth.instance.currentUser!.uid ?
-widget.isProfile=true:
-widget.isProfile=false; 
-}
+    widget.snap['uid'] == FirebaseAuth.instance.currentUser!.uid
+        ? widget.isProfile = true
+        : widget.isProfile = false;
+  }
 
   void getComments() async {
     QuerySnapshot snap = await FirebaseFirestore.instance
@@ -43,25 +44,20 @@ widget.isProfile=false;
         .get();
 
     try {
-        
-          final commentLengh = snap.docs.length;
-          setState(() {
-            commentLenght=commentLengh;
-          });
-
- 
+      final commentLengh = snap.docs.length;
+      setState(() {
+        commentLenght = commentLengh;
+      });
     } catch (e) {
       print(e.toString());
       // showSnackBarr(e.toString(), context);
     }
-  
   }
 
   bool isLikeAnimation = false;
   @override
   Widget build(BuildContext context) {
-
-      getComments();
+    getComments();
     final model.User? user = Provider.of<UserProvider>(context).getUser;
 
     return Card(
@@ -73,13 +69,14 @@ widget.isProfile=false;
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap:(() =>  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile(uid: widget.snap['uid'])))),
+                  onTap: (() => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Profile(uid: widget.snap['uid'])))),
                   child: Row(
                     children: [
                       Container(
                         width: 40,
                         height: 40,
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage(widget.snap['profImage']),
                                 fit: BoxFit.cover),
@@ -95,21 +92,28 @@ widget.isProfile=false;
                     ],
                   ),
                 ),
-                widget.isProfile?
-                IconButton(onPressed: ()async{
-   showDialog(context: context,builder: (ctx)=>
-   AlertDialog(title: Text('Delete Post'),
-   content: Text('Are you sure want to delete ?'),
-   actions: [
-    ElevatedButton(onPressed: ()async{
-  await FireStoreMethods().deletePost(widget.snap['postId'], context);
-  Navigator.of(context).pop();
-    }, child: 
-    const Icon(Icons.delete))
-   ],
-   ));
-                }, icon: const Icon(Icons.more_vert)):
-                SizedBox()
+                widget.isProfile
+                    ? IconButton(
+                        onPressed: () async {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: Text('Delete Post'),
+                                    content:
+                                        Text('Are you sure want to delete ?'),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            await FireStoreMethods().deletePost(
+                                                widget.snap['postId'], context);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Icon(Icons.delete))
+                                    ],
+                                  ));
+                        },
+                        icon: const Icon(Icons.more_vert))
+                    : SizedBox()
               ],
             ),
           ),
@@ -120,14 +124,32 @@ widget.isProfile=false;
               setState(() {
                 isLikeAnimation = true;
               });
-            },  
+            },
             child: Stack(
               alignment: Alignment.center,
               children: [
+                // CachedNetworkImage(
+                //   height: 400,
+                //   imageUrl: widget.snap['postUrl'],
+                //   imageBuilder: (context, imageProvider) => Container(
+                //     decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //           image: imageProvider,
+                //           fit: BoxFit.cover,
+                //           colorFilter: ColorFilter.mode(
+                //               Colors.red, BlendMode.colorBurn)),
+                //     ),
+                //   ),
+                //   placeholder: (context, url) =>
+                //       Center(child: CircularProgressIndicator()),
+                //   errorWidget: (context, url, error) => Icon(Icons.error),
+                // ),
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(widget.snap['postUrl']),
+
+                        image:
+                         NetworkImage(widget.snap['postUrl']),
                         fit: BoxFit.cover),
                   ),
                   height: 400,
@@ -179,12 +201,13 @@ widget.isProfile=false;
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
-                    child: IconButton(onPressed: (){
-                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            CommentsScreen(snap: widget.snap)));
-                    },
-                      icon: const Icon(Icons.chat_bubble_outline)),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  CommentsScreen(snap: widget.snap)));
+                        },
+                        icon: const Icon(Icons.chat_bubble_outline)),
                   ),
                   Icon(Icons.send),
                 ],
@@ -235,13 +258,15 @@ widget.isProfile=false;
                         builder: (context) =>
                             CommentsScreen(snap: widget.snap)));
                   },
-                  child:commentLenght==0?Text(
-                    '${commentLenght} comments',
-                    style: TextStyle(color: Colors.grey[800]),
-                  ): Text(
-                    'View all ${commentLenght} comments',
-                    style: TextStyle(color: Colors.grey[800]),
-                  ),
+                  child: commentLenght == 0
+                      ? Text(
+                          '${commentLenght} comments',
+                          style: TextStyle(color: Colors.grey[800]),
+                        )
+                      : Text(
+                          'View all ${commentLenght} comments',
+                          style: TextStyle(color: Colors.grey[800]),
+                        ),
                 ),
               )
             ],

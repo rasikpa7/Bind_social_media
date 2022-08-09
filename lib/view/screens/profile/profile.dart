@@ -11,7 +11,7 @@ import 'package:bind/view/screens/profile/widgets/editBioSheet.dart';
 import 'package:bind/view/screens/profile/widgets/followBotton.dart';
 import 'package:bind/view/screens/profile/widgets/userPostsViewScreen.dart';
 
-import 'package:bind/view/screens/profileScreen/widgets/currentUserPost.dart';
+import 'package:bind/view/screens/profile/widgets/currentUserPost.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -118,7 +118,9 @@ class _ProfileState extends State<Profile> {
                            
                                 backgroundImage:
 
-                                 NetworkImage(snapshot.data!.data()!['photoUrl'])
+                                 CachedNetworkImageProvider(snapshot.data!
+                      .data()!['photoUrl']),
+             backgroundColor: Colors.grey[400],
                                 ),
                                 Positioned(
                                   bottom: 1,
@@ -156,10 +158,11 @@ class _ProfileState extends State<Profile> {
                           CircleAvatar(
                              
                             radius: 70,
-                            backgroundColor: Colors.grey,
+                            backgroundColor: Colors.grey[500],
                             backgroundImage:
-                         
-                             NetworkImage(snapshot.data!.data()!['photoUrl'])
+                          CachedNetworkImageProvider(snapshot.data!.data()!['photoUrl']),
+           
+                            
                           ),
                           FirebaseAuth.instance.currentUser!.uid == widget.uid
                               ? FollowButton(
@@ -469,9 +472,10 @@ bool isFollowers;
         child: ListTile(
           
           leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  snapshot.data!
-                      .data()!['photoUrl'])),
+              backgroundImage: CachedNetworkImageProvider(snapshot.data!
+                      .data()!['photoUrl']),
+             backgroundColor: Colors.grey[400],
+                      ),
         
           title: Text(
               snapshot.data!.data()!['username'],style: TextStyle(fontSize: 18,

@@ -57,6 +57,7 @@ class HomeScreen extends StatelessWidget {
         
 
         return ListView.builder(itemCount: snapshot.data!.docs.length,
+        physics: BouncingScrollPhysics(),
           itemBuilder: ((context, index) {
           return 
         

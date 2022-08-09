@@ -132,10 +132,10 @@ Widget build(BuildContext context) {
 
     Column(mainAxisAlignment: MainAxisAlignment.center,
       children: [
-       
-          Lottie.network('https://assets2.lottiefiles.com/packages/lf20_GxMZME.json',
-          onLoaded: (p0) => const CircularProgressIndicator(),),
-           IconButton(onPressed: ()=>_selectImage(context), icon: const Icon(Icons.upload,size: 35,)),
+        Lottie.asset('lib/model/assets/uploadImage.json'),
+          // Lottie.network('https://assets2.lottiefiles.com/packages/lf20_GxMZME.json',
+          // onLoaded: (p0) => const CircularProgressIndicator(),),
+           IconButton(onPressed: ()=>_selectImage(context), icon: const Icon(Icons.upload,size: 40,)),
            Text('UPLOAD POST',
            style: GoogleFonts.openSans())
       

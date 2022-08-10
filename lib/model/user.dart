@@ -1,23 +1,31 @@
+import 'dart:convert';
+
+import 'package:bind/model/assets/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+class UserField {
+  static final String lastMessageTime = 'lastMessageTime';
+}
 class User {
   final String? email;
   final String? uid;
   final String? photoUrl;
   final String? username;
   final String? bio;
-  final dynamic? followers;
-  final dynamic? following;
+  final dynamic followers;
+  final dynamic following;
+   final DateTime lastMessageTime;
 
-  User(
+  User( 
       {required this.email,
       required this.uid,
       required this.photoUrl,
       required this.username,
       required this.bio,
       required this.followers,
-      required this.following});
+      required this.following,
+      required this.lastMessageTime,});
 
   Map<String, dynamic> toJson() => {
         "username": username,
@@ -26,7 +34,8 @@ class User {
         "photoUrl": photoUrl,
         "bio": bio,
         "followers": followers,
-        "following": following
+        "following": following,
+        'lastMessageTime': Utils.fromDateTimeToJson(lastMessageTime)
       };
 
   static User  fromSnap(DocumentSnapshot? snap) {
@@ -41,6 +50,7 @@ class User {
         username: snapshot['username'],
         bio: snapshot['bio'],
         followers: snapshot['followers'],
-        following: snapshot['following']);
+        following: snapshot['following'], 
+        lastMessageTime: Utils.toDateTime(snapshot['lastMessageTime']),);
   }
 }

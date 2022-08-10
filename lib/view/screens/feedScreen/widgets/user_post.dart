@@ -106,7 +106,7 @@ class _UserPostsState extends State<UserPosts> {
                                           onPressed: () async {
                                             await FireStoreMethods().deletePost(
                                                 widget.snap['postId'], context);
-                                            Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
                                           },
                                           child: const Icon(Icons.delete))
                                     ],
@@ -128,32 +128,25 @@ class _UserPostsState extends State<UserPosts> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // CachedNetworkImage(
-                //   height: 400,
-                //   imageUrl: widget.snap['postUrl'],
-                //   imageBuilder: (context, imageProvider) => Container(
-                //     decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //           image: imageProvider,
-                //           fit: BoxFit.cover,
-                //           colorFilter: ColorFilter.mode(
-                //               Colors.red, BlendMode.colorBurn)),
-                //     ),
-                //   ),
-                //   placeholder: (context, url) =>
-                //       Center(child: CircularProgressIndicator()),
-                //   errorWidget: (context, url, error) => Icon(Icons.error),
-                // ),
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-
-                        image:
-                         NetworkImage(widget.snap['postUrl']),
-                        fit: BoxFit.cover),
-                  ),
+                CachedNetworkImage(
                   height: 400,
+                  imageUrl: widget.snap['postUrl'],
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(
+                          //     Colors.black, BlendMode.colorBurn)
+                              ),
+                    ),
+                  ),
+                  placeholder: (context, url) =>const 
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error,size: 30,
+                  color: Colors.red,),
                 ),
+           
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: isLikeAnimation ? 1 : 0,

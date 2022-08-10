@@ -82,6 +82,7 @@ return'NO user found';
           photoUrl: googleUsercred.user!.photoURL,
           following: [],
           followers: [],
+          lastMessageTime:  DateTime.now()
         );
     
     //adding all user data to database

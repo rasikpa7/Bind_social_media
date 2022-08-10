@@ -1,3 +1,4 @@
+import 'package:bind/provider/user_provider.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+
+import '../../../model/user.dart';
 
 class MessagesScreen extends StatelessWidget {
   MessagesScreen({Key? key}) : super(key: key);
@@ -47,6 +51,7 @@ class ChatHeaderWidjet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Currentuser= Provider.of<UserProvider>(context).getUser;
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection('users').snapshots(),
       builder: ((context,
@@ -75,15 +80,18 @@ class ChatHeaderWidjet extends StatelessWidget {
                 margin: EdgeInsets.all(5.0),
                 child:
                  InkWell(
-                  
+                 
                   
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
-                    ChatScreen(snap: snapshot.data!.docs[index],)));
+                    ChatScreen(snap:  User.fromSnap(snapshot.data!.docs[index]),)));
 
                   },
 
-                   child: CircleAvatar(
+                   child: 
+                  // //  snapshot.data!.docs[index]['uid']==Currentuser!.uid?
+                  //  SizedBox():
+                   CircleAvatar(
                         backgroundColor: Colors.grey[400],
                     radius: 30,
                     backgroundImage: CachedNetworkImageProvider(snapshot.data!.docs[index]['photoUrl'])

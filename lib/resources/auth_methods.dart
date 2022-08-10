@@ -59,6 +59,7 @@ class AuthMethods {
           photoUrl: photoUrl,
           following: [],
           followers: [],
+          lastMessageTime:  DateTime.now()
         );
 
 //adding user to database

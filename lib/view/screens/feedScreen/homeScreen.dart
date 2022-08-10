@@ -1,10 +1,13 @@
+import 'package:bind/provider/user_provider.dart';
 import 'package:bind/view/screens/feedScreen/widgets/user_post.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
@@ -15,18 +18,37 @@ class HomeScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    final currentUser=Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.8),
       appBar: AppBar(
         // backgroundColor:Colors.transparent ,
         elevation: 0,
-        title:   Text('Bind',style:GoogleFonts.dancingScript(
-              textStyle: TextStyle(
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              letterSpacing: 4,
-              color: Colors.white)
-            ),),
+        title:   Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Bind',style:GoogleFonts.dancingScript(
+                  textStyle: const TextStyle( 
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  letterSpacing: 4,
+                  color: Colors.white)
+                ),),
+           
+
+             Text(
+              currentUser!.username!,style:GoogleFonts.dancingScript(
+                  textStyle: const 
+                  TextStyle(
+                    fontSize: 34,
+                    // fontWeight: FontWeight.bold,
+                  letterSpacing: 0,
+                  color: Colors.white)
+                ),),
+
+            
+          ],
+        ),
             centerTitle: true,
 
       ),

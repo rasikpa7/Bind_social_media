@@ -78,7 +78,7 @@ class _UserPostsState extends State<UserPosts> {
                         height: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(widget.snap['profImage']),
+                                image: CachedNetworkImageProvider(widget.snap['profImage']),
                                 fit: BoxFit.cover),
                             shape: BoxShape.circle),
                       ),

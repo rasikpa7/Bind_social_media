@@ -5,6 +5,7 @@ import 'package:bind/model/user.dart';
 import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/utils/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -168,8 +169,10 @@ Widget build(BuildContext context) {
 
       body: Column(
         children: [
-          isLoading?const  LinearProgressIndicator():
-          Padding(padding: EdgeInsets.only(top: 0)),
+          isLoading?const  LinearProgressIndicator(
+            
+          ):
+         
           Divider(),
           SizedBox(height: 10.h,),
           Row(
@@ -179,7 +182,7 @@ Widget build(BuildContext context) {
               CircleAvatar(
                 radius: 25,
                 backgroundImage:
-                NetworkImage(user!.photoUrl.toString()),
+                CachedNetworkImageProvider(user!.photoUrl.toString()),
               ),
 
               SizedBox(

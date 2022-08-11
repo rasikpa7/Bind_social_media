@@ -21,7 +21,7 @@ class Utils {
     return value.toDate();
   }
 
-  static dynamic fromDateTimeToJson(DateTime date) {
+  static dynamic fromDateTimeToJson(DateTime? date) {
     if (date == null) return null;
 
     return date.toUtc();

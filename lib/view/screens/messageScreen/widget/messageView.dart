@@ -22,13 +22,14 @@ class MessageViewWidget extends StatelessWidget {
     final CurrentUser= Provider.of<UserProvider>(context).getUser;
 
     return StreamBuilder(
-      stream: FirebaseApi.getMessages(idUser!),
+        stream: FirebaseApi.getMessages(idUser: CurrentUser!.uid!, recieverId: idUser!),
       builder: (context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
    if(snapshot.connectionState==ConnectionState.waiting){
-    const Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
    }
+  
 
       return snapshot.data!.docs.isEmpty?
       buildText('Say Hi...'):ListView.builder(
@@ -39,8 +40,8 @@ class MessageViewWidget extends StatelessWidget {
                  
                  final messagessnap=model.Message.fromJson(snapshot.data!.docs[index]);
                  
-                 return MessageWidget(message: messagessnap,
-                 isMe:idUser==CurrentUser!.uid);
+                 return MessageWidget(message: messagessnap,userImageUrl: snapshot.data!.docs[index]['recieverAvatarUrl'],
+                 isMe:messagessnap.senderId==CurrentUser.uid  );
        
       },);
 

@@ -15,7 +15,7 @@ class User {
   final String? bio;
   final dynamic followers;
   final dynamic following;
-   final DateTime lastMessageTime;
+   final DateTime? lastMessageTime;
 
   User( 
       {required this.email,

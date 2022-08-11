@@ -50,10 +50,10 @@ class FirebaseApi {
   }
 
 //fetching messages
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
-          String idUser) =>
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMessages({
+          required String idUser, required String recieverId}) =>
       FirebaseFirestore.instance
-          .collection('chats/$idUser/messages')
-          .orderBy(MessageField.createdAt, descending: true)
+          .collection('chats').doc(idUser).collection('messages').doc(recieverId).collection('chats').orderBy('createdAt',descending: true)
+          // .orderBy(MessageField.createdAt, descending: true)
           .snapshots();
 }

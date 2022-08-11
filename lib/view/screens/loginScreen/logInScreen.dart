@@ -146,6 +146,9 @@ class LogInScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        isLoading?
+                        
+                        SizedBox():
                         Container(
                           width: 100.w,
                           decoration: BoxDecoration(
@@ -166,10 +169,7 @@ class LogInScreen extends StatelessWidget {
                             }
                               
                               },
-                              icon: isLoading?
-                              const Center(
-                                child: CircularProgressIndicator(),
-                              ):
+                              icon: 
                               const FaIcon(
                                 FontAwesomeIcons.google,
                                 color: Colors.white,

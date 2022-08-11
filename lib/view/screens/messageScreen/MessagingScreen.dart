@@ -89,12 +89,15 @@ class ChatHeaderWidjet extends StatelessWidget {
                   },
 
                    child: 
-                  // //  snapshot.data!.docs[index]['uid']==Currentuser!.uid?
-                  //  SizedBox():
+                   snapshot.data!.docs[index]['uid']==Currentuser!.uid?
+                   SizedBox():
                    CircleAvatar(
                         backgroundColor: Colors.grey[400],
                     radius: 30,
-                    backgroundImage: CachedNetworkImageProvider(snapshot.data!.docs[index]['photoUrl'])
+                    backgroundImage: CachedNetworkImageProvider(snapshot.data!.docs[index]['photoUrl']),
+                    child: Text(snapshot.data!.docs[index]['username'],style: TextStyle(
+                      color: Colors.white,fontSize: 15,fontWeight: FontWeight.bold
+                    ),),
                      
                        
                                 

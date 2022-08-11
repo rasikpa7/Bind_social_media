@@ -4,9 +4,11 @@ import '../../../../model/message_model.dart';
 
 class MessageWidget extends StatelessWidget {
   final Message message;
-   bool isMe=false;
+   bool isMe;
+   
+   final userImageUrl;
 
-   MessageWidget({
+   MessageWidget({required this.userImageUrl,
     required this.message,
      required this.isMe,
   });
@@ -19,15 +21,16 @@ class MessageWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: <Widget>[
-        if (!isMe)
-          CircleAvatar(
-              radius: 16, backgroundImage: NetworkImage(message.recieverAvatarUrl)),
-        Container(
+        // if (!isMe)
+        //   CircleAvatar(
+        //       radius: 16, backgroundImage: NetworkImage(message.recieverAvatarUrl)),
+        Container( 
           padding: EdgeInsets.all(16),
           margin: EdgeInsets.all(16),
           constraints: BoxConstraints(maxWidth: 140),
           decoration: BoxDecoration(
-            color: isMe ? Colors.blue[100] : Theme.of(context).accentColor,
+            color: isMe ? Colors.orangeAccent[200] : 
+            Theme.of(context).accentColor,
             borderRadius: isMe
                 ? borderRadius.subtract(BorderRadius.only(bottomRight: radius))
                 : borderRadius.subtract(BorderRadius.only(bottomLeft: radius)),

@@ -1,4 +1,4 @@
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../model/user.dart';
@@ -46,6 +46,7 @@ recieverId: widget.snap.uid!,
       children: [
         Expanded(child: TextFormField(
           controller: _textController,
+         
           onChanged: (value) {
             setState(() {
               messages=value;
@@ -72,7 +73,8 @@ recieverId: widget.snap.uid!,
                messages.trim().isEmpty ? showSnackBarr('Type some message to sent!', context) :sendMessage();
           },
           child: CircleAvatar(
-            backgroundColor: Colors.black,
+            backgroundColor:  _textController.text.isEmpty?Colors.grey:
+            Colors.black,
             radius: 24,
             child: Icon(Icons.arrow_forward,color: Colors.white,),),
         ),

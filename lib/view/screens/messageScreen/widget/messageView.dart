@@ -1,7 +1,8 @@
 
 
+import 'package:bind/controller/user_provider.dart';
 import 'package:bind/model/message_model.dart'as model;
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/firebase_message_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

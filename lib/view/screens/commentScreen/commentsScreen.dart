@@ -1,5 +1,5 @@
 import 'package:bind/model/user.dart';
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/view/screens/commentScreen/widgets/commets_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../../controller/user_provider.dart';
 
 class CommentsScreen extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();

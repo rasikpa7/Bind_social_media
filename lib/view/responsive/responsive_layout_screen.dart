@@ -1,7 +1,11 @@
-import 'package:bind/provider/user_provider.dart';
-import 'package:bind/utils/dimention.dart';
+
+import 'package:bind/model/utils/dimention.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../controller/user_provider.dart';
+
+
 class ResponsiveLayout extends StatefulWidget {
   final webScreenLayout;
   final mobileScreenLayout;

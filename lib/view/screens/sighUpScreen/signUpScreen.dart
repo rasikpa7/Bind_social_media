@@ -1,27 +1,29 @@
 import 'dart:typed_data';
 
-import 'package:bind/provider/google_signIn_Provider.dart';
-import 'package:bind/provider/user_provider.dart';
+
+import 'package:bind/controller/google_signIn_Provider.dart';
+import 'package:bind/controller/userSignUp_provider.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:bind/resources/auth_methods.dart';
-import 'package:bind/responsive/mobile_scree_layout.dart';
-import 'package:bind/responsive/responsive_layout_screen.dart';
-import 'package:bind/responsive/web_screen_layout.dart';
-import 'package:bind/utils/dimention.dart';
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/dimention.dart';
+
+import 'package:bind/view/responsive/mobile_scree_layout.dart';
+import 'package:bind/view/responsive/responsive_layout_screen.dart';
+import 'package:bind/view/responsive/web_screen_layout.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
 
 import 'package:bind/view/widgets/text/fieldInput.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/userSignUp_provider.dart';
+
+
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -94,17 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  // showLoaderDialog(BuildContext context) {
-  //   AlertDialog alert = AlertDialog(
-  //     content: new Row(
-  //       children: [
-  //         CircularProgressIndicator(),
-  //         Container(
-  //             margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
-  //       ],
-  //     ),
-  //   );
-  // }
+
 
   @override
   Widget build(BuildContext context) {

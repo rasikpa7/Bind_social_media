@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bind/model/user.dart' as model;
 import 'package:bind/resources/auth_methods.dart';
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

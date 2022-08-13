@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../provider/user_provider.dart';
+import '../../../../controller/user_provider.dart';
+
+
 
 class Bottomsheet {
   

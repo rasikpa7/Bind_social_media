@@ -1,5 +1,5 @@
 import 'package:bind/model/user.dart' as model;
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/view/screens/searchScreen/widgets/explore_grid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../controller/user_provider.dart';
 
 class SearchScreenGrid extends StatelessWidget {
   const SearchScreenGrid({Key? key}) : super(key: key);

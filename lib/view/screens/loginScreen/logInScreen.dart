@@ -1,12 +1,10 @@
-import 'package:bind/provider/google_signIn_Provider.dart';
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/auth_methods.dart';
-import 'package:bind/responsive/mobile_scree_layout.dart';
-import 'package:bind/responsive/responsive_layout_screen.dart';
-import 'package:bind/responsive/web_screen_layout.dart';
-import 'package:bind/utils/dimention.dart';
-import 'package:bind/utils/utils.dart';
-import 'package:bind/view/sighUpScreen/signUpScreen.dart';
+
+import 'package:bind/model/utils/dimention.dart';
+import 'package:bind/model/utils/utils.dart';
+import 'package:bind/view/responsive/web_screen_layout.dart';
+import 'package:bind/view/screens/sighUpScreen/signUpScreen.dart';
 import 'package:bind/view/widgets/text/fieldInput.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +15,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import '../../../controller/google_signIn_Provider.dart';
+import '../../../controller/user_provider.dart';
+
+
+import '../../responsive/mobile_scree_layout.dart';
+import '../../responsive/responsive_layout_screen.dart';
 
 class LogInScreen extends StatelessWidget {
   LogInScreen({Key? key}) : super(key: key);

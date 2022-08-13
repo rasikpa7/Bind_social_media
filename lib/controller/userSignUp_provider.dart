@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

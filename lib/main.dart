@@ -1,9 +1,8 @@
-import 'package:bind/provider/google_signIn_Provider.dart';
-import 'package:bind/provider/userSignUp_provider.dart';
-import 'package:bind/provider/user_provider.dart';
-import 'package:bind/responsive/mobile_scree_layout.dart';
-import 'package:bind/responsive/responsive_layout_screen.dart';
-import 'package:bind/responsive/web_screen_layout.dart';
+
+import 'package:bind/controller/user_provider.dart';
+import 'package:bind/view/responsive/mobile_scree_layout.dart';
+import 'package:bind/view/responsive/web_screen_layout.dart';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import 'controller/google_signIn_Provider.dart';
+import 'controller/userSignUp_provider.dart';
+import 'view/responsive/responsive_layout_screen.dart';
 import 'view/screens/loginScreen/logInScreen.dart';
 
 void main() async {

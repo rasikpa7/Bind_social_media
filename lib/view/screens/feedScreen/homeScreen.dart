@@ -1,4 +1,4 @@
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/view/screens/feedScreen/widgets/user_post.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,13 +9,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/user_provider.dart';
+
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
-  final List people=[
-'salsal','jafer',
-'kiran','karthik',
-'razik'
-  ];
+
   @override
   Widget build(BuildContext context) {
     final currentUser=Provider.of<UserProvider>(context).getUser;

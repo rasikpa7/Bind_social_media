@@ -1,10 +1,12 @@
 import 'package:bind/model/user.dart';
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../controller/user_provider.dart';
 
 class ChatHeaderWidjet extends StatelessWidget {
   const ChatHeaderWidjet({

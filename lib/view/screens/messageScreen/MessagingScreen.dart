@@ -1,4 +1,4 @@
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/view/screens/messageScreen/widget/chatHeadWidget.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/user_provider.dart';
 import '../../../model/user.dart' as model;
 
 class MessagesScreen extends StatelessWidget {

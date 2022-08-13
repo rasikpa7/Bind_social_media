@@ -1,5 +1,5 @@
 import 'package:bind/model/user.dart';
-import 'package:bind/provider/user_provider.dart';
+
 
 import 'package:bind/view/screens/messageScreen/MessagingScreen.dart';
 
@@ -9,7 +9,7 @@ import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';
-import 'package:bind/view/sighUpScreen/signUpScreen.dart';
+import 'package:bind/view/screens/sighUpScreen/signUpScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

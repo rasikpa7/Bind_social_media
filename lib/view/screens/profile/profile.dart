@@ -2,10 +2,10 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:bind/model/user.dart' as model;
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/resources/firestore_methods.dart';
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:bind/view/screens/profile/widgets/editBioSheet.dart';
@@ -24,6 +24,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/user_provider.dart';
 import '../feedScreen/widgets/user_post.dart';
 import 'widgets/editProfileImageBottomSheet.dart';
 

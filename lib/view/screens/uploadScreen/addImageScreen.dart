@@ -2,9 +2,9 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bind/model/user.dart';
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/firestore_methods.dart';
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -13,6 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../../controller/user_provider.dart';
 
 
 
@@ -46,6 +48,7 @@ final TextEditingController _descriptionController =TextEditingController();
        setState(() {
       
       isLoading=false;
+      _descriptionController.clear();
     });
       showSnackBarr('Posted !', context);
       clearImage();
@@ -154,8 +157,9 @@ Widget build(BuildContext context) {
         centerTitle: false,
         actions: [
           TextButton(
-              onPressed: () {
-                postImage(user!.uid!, user.username!, user.photoUrl!);
+              onPressed: ()async{
+                 postImage(user!.uid!, user.username!, user.photoUrl!);
+
               },
               child: const Text(
                 'Post',

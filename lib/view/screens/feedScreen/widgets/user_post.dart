@@ -1,7 +1,7 @@
 import 'package:bind/model/user.dart' as model;
-import 'package:bind/provider/user_provider.dart';
+
 import 'package:bind/resources/firestore_methods.dart';
-import 'package:bind/utils/utils.dart';
+
 import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
@@ -14,6 +14,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../controller/user_provider.dart';
 
 class UserPosts extends StatefulWidget {
   final snap;
@@ -78,7 +80,8 @@ class _UserPostsState extends State<UserPosts> {
                         height: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: CachedNetworkImageProvider(widget.snap['profImage']),
+                                image: CachedNetworkImageProvider(
+                                    widget.snap['profImage']),
                                 fit: BoxFit.cover),
                             shape: BoxShape.circle),
                       ),
@@ -106,7 +109,7 @@ class _UserPostsState extends State<UserPosts> {
                                           onPressed: () async {
                                             await FireStoreMethods().deletePost(
                                                 widget.snap['postId'], context);
-                                        Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
                                           },
                                           child: const Icon(Icons.delete))
                                     ],
@@ -134,21 +137,24 @@ class _UserPostsState extends State<UserPosts> {
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                          // colorFilter: ColorFilter.mode(
-                          //     Colors.black, BlendMode.colorBurn)
-                              ),
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                  placeholder: (context, url) =>
-                  Container(
-                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage('lib/model/assets/placeholder_for_homepost.jpg'),fit: BoxFit.cover)),
+                  placeholder: (context, url) => Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'lib/model/assets/placeholder_for_homepost.jpg'),
+                            fit: BoxFit.cover)),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error,size: 30,
-                  color: Colors.red,),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    size: 30,
+                    color: Colors.red,
+                  ),
                 ),
-           
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: isLikeAnimation ? 1 : 0,

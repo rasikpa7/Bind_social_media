@@ -1,13 +1,13 @@
 
-import 'package:bind/provider/user_provider.dart';
 import 'package:bind/resources/firebase_message_api.dart';
-import 'package:bind/utils/utils.dart';
+import 'package:bind/model/utils/utils.dart';
 import 'package:bind/view/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../controller/user_provider.dart';
 import '../../../../model/user.dart';
 import 'messageSentTextField.dart';
 import 'messageView.dart';

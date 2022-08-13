@@ -43,7 +43,7 @@ class _LikeAnimationState extends State<LikeAnimation>
         startAnimation();
 
     }
-  }
+  } 
 
     startAnimation()async{
       

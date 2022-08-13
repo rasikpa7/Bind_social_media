@@ -20,9 +20,9 @@ class FollowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 0.0,right: 5),
       child: Container(
-        width: 150,
+        width: 100,
         height: 40,
         decoration: BoxDecoration(
           color: backgroundColor,

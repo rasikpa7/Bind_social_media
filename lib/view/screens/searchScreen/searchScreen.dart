@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../widgets/ImageAlertView.dart';
+
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key? key}) : super(key: key);
 
@@ -61,16 +63,24 @@ class _SearchScreenState extends State<SearchScreen> {
                                   builder: (context) => Profile(
                                       uid: snapshot.data!.docs[index]['uid']),
                                 )),
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                      backgroundColor: Colors.grey[500],
-                                      radius: 30,
-                                      backgroundImage:  CachedNetworkImageProvider(
-                                        
-                                        snapshot
-                                              .data!.docs[index]['photoUrl'])),
-                                  title: Text(
-                                      snapshot.data!.docs[index]['username']),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueGrey,
+                                      borderRadius: BorderRadius.circular(18)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(7.0),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                          backgroundColor: Colors.grey[500],
+                                          radius: 30,
+                                          backgroundImage:
+                                              CachedNetworkImageProvider(
+                                                  snapshot.data!.docs[index]
+                                                      ['photoUrl'])),
+                                      title: Text(snapshot.data!.docs[index]
+                                          ['username']),
+                                    ),
+                                  ),
                                 ),
                               ),
                             );
@@ -96,9 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
                   return snapshot.data!.docs.isNotEmpty
                       ? GridView.custom(
-                        
                           gridDelegate: SliverQuiltedGridDelegate(
-                            
                             crossAxisCount: 4,
                             mainAxisSpacing: 2,
                             crossAxisSpacing: 2,
@@ -111,25 +119,21 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                           childrenDelegate: SliverChildBuilderDelegate(
-                            childCount: snapshot.data!.docs.length,
-                            
-                              (context, index) => ExploreCard(
-                                    imageUrl: snapshot.data!.docs[index]
-                                        ['postUrl'],
-                                  )),
+                              childCount: snapshot.data!.docs.length,
+                              (context, index) => InkWell(
+                                onTap: (){
+                                  showDialog(context: context, builder: (builder){
+                                    return ImageAlertView(isProfile: false,imageUrl: snapshot.data!.docs[index]
+                                          ['postUrl'],);
+                                  });
+                                },
+                                child: ExploreCard(
+                                      imageUrl: snapshot.data!.docs[index]
+                                          ['postUrl'],
+                                    ),
+                              )),
                         )
 
-                      //  GridView.builder(
-                      //     itemCount: snapshot.data!.docs.length,
-                      //     gridDelegate:
-                      //         const SliverGridDelegateWithFixedCrossAxisCount(
-                      //       crossAxisCount: 3,
-                      //     ),
-                      //     itemBuilder: (context, index) {
-                      //       return ExploreCard(
-                      //         imageUrl: snapshot.data!.docs[index]['postUrl'],
-                      //       );
-                      //     })
                       : const Center(
                           child: Text('nothing found'),
                         );

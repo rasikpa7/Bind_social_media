@@ -141,8 +141,10 @@ class _UserPostsState extends State<UserPosts> {
                               ),
                     ),
                   ),
-                  placeholder: (context, url) =>const 
-                      Center(child: CircularProgressIndicator()),
+                  placeholder: (context, url) =>
+                  Container(
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage('lib/model/assets/placeholder_for_homepost.jpg'),fit: BoxFit.cover)),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error,size: 30,
                   color: Colors.red,),
                 ),

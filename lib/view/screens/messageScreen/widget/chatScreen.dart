@@ -28,19 +28,7 @@ class ChatScreen extends StatelessWidget {
         IconButton(onPressed: (){
 
         }, icon:const  Icon(Icons.more_vert))
-        // InkWell(onTap: (){
-        //   showSnackBarr('Coming Soon . . . .', context);
-        // },
-
-        //   child: CircleAvatar(child: Icon(Icons.call))),
-        // SizedBox(width: 15,),
-        //  InkWell(onTap: (){
-        //   showSnackBarr('Coming Soon . . . .', context);
-        // },
-        //    child: CircleAvatar(backgroundColor: Colors.green,
-        //     child: Icon(Icons.video_call,color: Colors.white,)),
-        //  ),
-        //   SizedBox(width: 10,),
+     
       ],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +41,7 @@ class ChatScreen extends StatelessWidget {
             },
               child: Text(snap.username!.toUpperCase(),style: TextStyle(fontWeight: FontWeight.w400),)),
               SizedBox(height: 2,),
-            Row(children: [
+            Row(children: const[
               Text(' Online',style: TextStyle(fontSize: 13),),
               SizedBox(width:4),
               CircleAvatar(radius: 5,

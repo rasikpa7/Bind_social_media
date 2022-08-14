@@ -143,7 +143,7 @@ class _UserPostsState extends State<UserPosts> {
                     ),
                   ),
                   placeholder: (context, url) => Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
                                 'lib/model/assets/placeholder_for_homepost.jpg'),
@@ -159,7 +159,8 @@ class _UserPostsState extends State<UserPosts> {
                   duration: const Duration(milliseconds: 200),
                   opacity: isLikeAnimation ? 1 : 0,
                   child: LikeAnimation(
-                    child: const Icon(
+                    child: const 
+                     Icon(
                       Icons.favorite,
                       color: Colors.white,
                       size: 120,
@@ -200,95 +201,106 @@ class _UserPostsState extends State<UserPosts> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  CommentsScreen(snap: widget.snap)));
-                        },
-                        icon: const Icon(Icons.chat_bubble_outline)),
-                  ),
-                  Icon(Icons.send),
                 ],
               ),
-              Icon(Icons.bookmark),
+              Padding(
+                padding: const EdgeInsets.only(right: 5.0),
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              CommentsScreen(snap: widget.snap)));
+                    },
+                    icon: const Icon(Icons.chat_bubble_outline)),
+              ),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Liked by '),
-                Text(
-                  '${widget.snap['likes'].length}',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  ' people ',
-                  style: TextStyle(fontWeight: FontWeight.w400),
-                ),
+                _likesViewCount(),
+                _commentsViewSection(context),
               ],
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        style: TextStyle(color: Colors.black),
-                        children: [
-                          TextSpan(
-                              text: '${widget.snap['username']}',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: '  ${widget.snap['description']}')
-                        ])),
-              ),
+              _usernameAndBioView(),
+              _publishedDate()
             ],
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            CommentsScreen(snap: widget.snap)));
-                  },
-                  child: commentLenght == 0
-                      ? Text(
-                          '${commentLenght} comments',
-                          style: TextStyle(color: Colors.grey[800]),
-                        )
-                      : Text(
-                          'View all ${commentLenght} comments',
-                          style: TextStyle(color: Colors.grey[800]),
-                        ),
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {},
-                  child: Text(
-                    DateFormat.yMMMd()
-                        .format(widget.snap['datePublished'].toDate()),
-                    style: TextStyle(color: Colors.grey[800]),
-                  ),
-                ),
-              )
-            ],
-          )
         ],
       ),
+    );
+  }
+
+  Padding _publishedDate() {
+    return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {},
+                child: Text(
+                  DateFormat.yMMMd()
+                      .format(widget.snap['datePublished'].toDate()),
+                  style: TextStyle(color: Colors.grey[800]),
+                ),
+              ),
+            );
+  }
+
+  Padding _usernameAndBioView() {
+    return Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text: '${widget.snap['username']}',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(text: '  ${widget.snap['description']}')
+                      ])),
+            );
+  }
+
+  Padding _commentsViewSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CommentsScreen(snap: widget.snap)));
+        },
+        child: commentLenght == 0
+            ? Text(
+                '${commentLenght} comments',
+                style: TextStyle(color: Colors.grey[800]),
+              )
+            : Text(
+                'View all ${commentLenght} comments',
+                style: TextStyle(color: Colors.grey[800]),
+              ),
+      ),
+    );
+  }
+
+  Row _likesViewCount() {
+    return Row(
+      children: [
+        Text('Liked by '),
+        Text(
+          '${widget.snap['likes'].length}',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          ' people ',
+          style: TextStyle(fontWeight: FontWeight.w400),
+        ),
+      ],
     );
   }
 }

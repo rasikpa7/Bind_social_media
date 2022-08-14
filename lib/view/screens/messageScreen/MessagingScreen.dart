@@ -43,11 +43,11 @@ class MessagesScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.grey[500],
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(35),
-                    topRight: Radius.circular(35))),
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5))),
             child: StreamBuilder(
               stream:
-                  FirebaseFirestore.instance.collection('users').orderBy('lastMessageTime',descending: false).snapshots(),
+                  FirebaseFirestore.instance.collection('users').orderBy('lastMessageTime',descending: true).snapshots(),
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if(snapshot.connectionState==ConnectionState.waiting){
@@ -88,6 +88,7 @@ class MessagesScreen extends StatelessWidget {
                                 child: ListTile(
                                   leading: CircleAvatar(
                                       radius: 25,
+                                      backgroundColor: Colors.grey[400],
                                       backgroundImage: CachedNetworkImageProvider(
                                           snapshot.data!.docs[index]
                                               ['photoUrl'])),

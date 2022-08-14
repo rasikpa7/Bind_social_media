@@ -14,8 +14,12 @@ class FirebaseApi {
     required String recieverUsername,
   }) async {
     //adding datas to CurrentUser database
-    final refMessage =  FirebaseFirestore.instance
-        .collection('chats').doc(currentUserId).collection('messages').doc(recieverId).collection('chats');
+    final refMessage = FirebaseFirestore.instance
+        .collection('chats')
+        .doc(currentUserId)
+        .collection('messages')
+        .doc(recieverId)
+        .collection('chats');
 
     final newMessage = Message(
       senderId: currentUserId,
@@ -26,34 +30,59 @@ class FirebaseApi {
       createdAt: DateTime.now(),
     );
     await refMessage.add(newMessage.toJson()).then((value) {
-    final cRef=  FirebaseFirestore.instance.collection('chats').doc(currentUserId).collection('messages').doc(recieverId);
-    cRef.set({'lastMessage':message});
+      final cRef = FirebaseFirestore.instance
+          .collection('chats')
+          .doc(currentUserId)
+          .collection('messages')
+          .doc(recieverId);
+      cRef.set({'lastMessage': message});
     });
     //adding datas to reciever's data base
 
-    final recieverRef=FirebaseFirestore.instance
-    .collection('chats').doc(recieverId).collection('messages').doc(currentUserId).collection('chats');
+    final recieverRef = FirebaseFirestore.instance
+        .collection('chats')
+        .doc(recieverId)
+        .collection('messages')
+        .doc(currentUserId)
+        .collection('chats');
     recieverRef.add(newMessage.toJson()).then((value) => {
-    
-     FirebaseFirestore.instance.collection('chats').doc(recieverId).collection('messages').doc(currentUserId).set({
-      'lastMessage':message
-     })
- 
-
-
-    });
+          FirebaseFirestore.instance
+              .collection('chats')
+              .doc(recieverId)
+              .collection('messages')
+              .doc(currentUserId)
+              .set({'lastMessage': message})
+        });
     //reciever time updated
     final refUsers = FirebaseFirestore.instance.collection('users');
-    await refUsers
-        .doc(recieverId)
-        .update({UserField.lastMessageTime: DateTime.now()});
+    await refUsers.doc(recieverId).update(
+        {UserField.lastMessageTime: Utils.fromDateTimeToJson(DateTime.now())});
   }
 
 //fetching messages
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getMessages({
-          required String idUser, required String recieverId}) =>
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
+          {required String idUser, required String recieverId}) =>
       FirebaseFirestore.instance
-          .collection('chats').doc(idUser).collection('messages').doc(recieverId).collection('chats').orderBy('createdAt',descending: true)
+          .collection('chats')
+          .doc(idUser)
+          .collection('messages')
+          .doc(recieverId)
+          .collection('chats')
+          .orderBy('createdAt', descending: true)
           // .orderBy(MessageField.createdAt, descending: true)
           .snapshots();
+
+  Future<void> clearMessages(
+      {required String currentuserId,
+      required String reciever}) async {
+
+    
+    await FirebaseFirestore.instance .collection('chats').doc(currentuserId)
+     .collection('messages').doc(reciever).delete();
+     await   FirebaseFirestore.instance .collection('chats').doc(reciever)
+     .collection('messages').doc(currentuserId).delete();
+// var snapshots = await collection.get();
+// for (var doc in snapshots.docs) {
+//   await doc.reference.delete();
+  }
 }

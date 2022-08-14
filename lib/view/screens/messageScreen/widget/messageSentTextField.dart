@@ -35,6 +35,7 @@ recieverId: widget.snap.uid!,
 
       //
       _textController.clear();
+      messages='';
 
     }
     
@@ -73,7 +74,7 @@ recieverId: widget.snap.uid!,
                messages.trim().isEmpty ? showSnackBarr('Type some message to sent!', context) :sendMessage();
           },
           child: CircleAvatar(
-            backgroundColor:  _textController.text.isEmpty?Colors.grey:
+            backgroundColor:   messages.trim().isEmpty ?Colors.grey:
             Colors.black,
             radius: 24,
             child: Icon(Icons.arrow_forward,color: Colors.white,),),

@@ -2,6 +2,8 @@
 import 'package:bind/resources/firebase_message_api.dart';
 import 'package:bind/model/utils/utils.dart';
 import 'package:bind/view/screens/profile/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,9 +27,28 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.black,
       actions: [
 
-        IconButton(onPressed: (){
+        IconButton(onPressed: ()async{
+           showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    title: Text('Clear Chat History'),
+                                    content:
+                                        Text('Are you sure want to clear chat ? '),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            await FirebaseApi().clearMessages(currentuserId: user!.uid!, reciever: snap.uid!);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('YES')),
 
-        }, icon:const  Icon(Icons.more_vert))
+                                          ElevatedButton(onPressed: (){
+                                            Navigator.of(context).pop();
+                                          }, child: const Text('NO'))
+                                    ],
+                                  ));
+
+        }, icon:const  Icon(Icons.delete_forever))
      
       ],
         title: Column(

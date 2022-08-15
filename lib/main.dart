@@ -2,6 +2,7 @@
 import 'package:bind/controller/user_provider.dart';
 import 'package:bind/view/responsive/mobile_scree_layout.dart';
 import 'package:bind/view/responsive/web_screen_layout.dart';
+import 'package:bind/view/screens/splashScreen/splashScreen.dart';
 
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,32 +55,7 @@ class MyApp extends StatelessWidget {
               appBarTheme: AppBarTheme(color: Colors.black),
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: const Color(0XFFEFF3F6)),
-          home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return const ResponsiveLayout(
-                    mobileScreenLayout: MobileScreenLayout(),
-                    webScreenLayout: WebScreenLayout(),
-                  );
-                } 
-                else if (snapshot.hasError) {
-                  return Center(child: Text(snapshot.error.toString()));
-                }
-              }
-              else if(snapshot.connectionState==ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),);
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return LogInScreen();
-            },
-          ),
+          home: SplashScreen()
         ),
       ),
     );

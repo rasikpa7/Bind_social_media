@@ -114,7 +114,9 @@ class FireStoreMethods {
       );
 
     }
-    else if(followers.contains(followId)){
+    else
+     if(followers.contains(followId))
+    {
          await _firestore.collection('users').doc(uid).update(
         {
           'followers':FieldValue.arrayRemove([followId])

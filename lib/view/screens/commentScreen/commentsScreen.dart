@@ -46,16 +46,16 @@ class CommentsScreen extends StatelessWidget {
         height: 55.h,
         margin:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        padding: EdgeInsets.only(left: 16, right: 8),
+        padding: EdgeInsets.only(left: 16.w, right: 8.w),
         child: Row(
           children: [
             CircleAvatar(
               backgroundImage: NetworkImage(user!.photoUrl!),
-              radius: 18,
+              radius: 18.r,
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 8),
+                padding:  EdgeInsets.only(left: 16.0.w, right: 8.w),
                 child: TextField(
                   controller: _textController,
                   decoration: InputDecoration(
@@ -76,8 +76,8 @@ class CommentsScreen extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 8,
+                  vertical: 8.h,
+                  horizontal: 8.w,
                 ),
                 child: const Text(
                   'Post',

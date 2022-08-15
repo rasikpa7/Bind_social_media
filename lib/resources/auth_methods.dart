@@ -59,7 +59,8 @@ class AuthMethods {
           photoUrl: photoUrl,
           following: [],
           followers: [],
-          lastMessageTime:  DateTime.now()
+          lastMessageTime:  DateTime.now(),
+          status: 'offline'
         );
 
 //adding user to database

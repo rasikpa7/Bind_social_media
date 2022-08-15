@@ -16,8 +16,9 @@ class User {
   final dynamic followers;
   final dynamic following;
    final DateTime? lastMessageTime;
+   final String status;
 
-  User( 
+  User(
       {required this.email,
       required this.uid,
       required this.photoUrl,
@@ -25,7 +26,8 @@ class User {
       required this.bio,
       required this.followers,
       required this.following,
-      required this.lastMessageTime,});
+      required this.lastMessageTime,
+      required this.status});
 
   Map<String, dynamic> toJson() => {
         "username": username,
@@ -35,7 +37,8 @@ class User {
         "bio": bio,
         "followers": followers,
         "following": following,
-        'lastMessageTime': Utils.fromDateTimeToJson(lastMessageTime)
+        'lastMessageTime': Utils.fromDateTimeToJson(lastMessageTime),
+        'status':status
       };
 
   static User  fromSnap(DocumentSnapshot? snap) {
@@ -51,6 +54,8 @@ class User {
         bio: snapshot['bio'],
         followers: snapshot['followers'],
         following: snapshot['following'], 
-        lastMessageTime: Utils.toDateTime(snapshot['lastMessageTime']),);
+        lastMessageTime: Utils.toDateTime(snapshot['lastMessageTime']),
+        status: snapshot['status']
+        );
   }
 }

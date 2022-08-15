@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../controller/user_provider.dart';
@@ -25,32 +26,7 @@ class ChatScreen extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.black,
-      actions: [
-
-        IconButton(onPressed: ()async{
-           showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                    title: Text('Clear Chat History'),
-                                    content:
-                                        Text('Are you sure want to clear chat ? '),
-                                    actions: [
-                                      ElevatedButton(
-                                          onPressed: () async {
-                                            await FirebaseApi().clearMessages(currentuserId: user!.uid!, reciever: snap.uid!);
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('YES')),
-
-                                          ElevatedButton(onPressed: (){
-                                            Navigator.of(context).pop();
-                                          }, child: const Text('NO'))
-                                    ],
-                                  ));
-
-        }, icon:const  Icon(Icons.delete_forever))
-     
-      ],
+  
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -61,12 +37,18 @@ class ChatScreen extends StatelessWidget {
               },));
             },
               child: Text(snap.username!.toUpperCase(),style: TextStyle(fontWeight: FontWeight.w400),)),
-              SizedBox(height: 2,),
-            Row(children: const[
-              Text(' Online',style: TextStyle(fontSize: 13),),
-              SizedBox(width:4),
-              CircleAvatar(radius: 5,
+              SizedBox(height: 2.h,),
+           snap.status=='online'? Row(children: [
+              Text(' Online',style: TextStyle(fontSize: 13.sp),),
+              SizedBox(width:4.w),
+              CircleAvatar(radius: 5.r,
                 backgroundColor: Colors.green
+              ,)
+            ],):Row(children: [
+              Text('Offline',style: TextStyle(fontSize: 13.sp),),
+              SizedBox(width:4.w),
+              CircleAvatar(radius: 5.r,
+                backgroundColor: Colors.red
               ,)
             ],)
           ],
@@ -84,7 +66,7 @@ class ChatScreen extends StatelessWidget {
             )),
             //messaage sending field
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0.r),
               child: SentNewMessageTextField(snap: snap,currentUser: user),
             ),
           ],

@@ -6,6 +6,7 @@ import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../controller/user_provider.dart';
@@ -36,13 +37,13 @@ class ChatHeaderWidjet extends StatelessWidget {
           );
         }
         return ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics:const  BouncingScrollPhysics(),
             cacheExtent: 100000,
             scrollDirection: Axis.horizontal,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: ((context, index) {
               return Container(
-                margin: EdgeInsets.all(5.0),
+                margin: EdgeInsets.all(5.0.r),
                 child: InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -51,19 +52,19 @@ class ChatHeaderWidjet extends StatelessWidget {
                               )));
                     },
                     child: snapshot.data!.docs[index]['uid'] == Currentuser!.uid
-                        ? SizedBox()
+                        ? const SizedBox()
                         : 
                          
                             CircleAvatar(
                                 backgroundColor: Colors.grey[400],
-                                radius: 30,
+                                radius: 30.r,
                                 backgroundImage: CachedNetworkImageProvider(
                                     snapshot.data!.docs[index]['photoUrl']),
                                child:  Text(
                                   snapshot.data!.docs[index]['username'],
-                                  style: const TextStyle(
+                                  style:  TextStyle(
                                       color: Colors.white,
-                                      fontSize: 15,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),

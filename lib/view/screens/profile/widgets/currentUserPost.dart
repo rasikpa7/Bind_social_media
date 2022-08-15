@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../widgets/ImageAlertView.dart';
 
@@ -62,12 +63,12 @@ class UserPostGrid extends StatelessWidget {
                             });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding:  EdgeInsets.all(4.0.r),
                         child: Card(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(5.r),
                             child: CachedNetworkImage(
-                              height: 400,
+                              height: 400.h,
                               imageUrl:
                                   snapshot.data!.docs[index].data()['postUrl'],
                               imageBuilder: (context, imageProvider) =>
@@ -80,29 +81,19 @@ class UserPostGrid extends StatelessWidget {
                                 ),
                               ),
                               placeholder: (context, url) => Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
                                             'lib/model/assets/placeholder_for_homepost.jpg'),
                                         fit: BoxFit.cover)),
                               ),
-                              errorWidget: (context, url, error) => const Icon(
+                              errorWidget: (context, url, error) =>  Icon(
                                 Icons.error,
-                                size: 30,
+                                size: 30.sp,
                                 color: Colors.red,
                               ),
                             ),
                           ),
-
-                          //  Container(
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(5),
-                          //     image: DecorationImage(
-                          //         image: NetworkImage(snapshot.data!.docs[index]
-                          //             .data()['postUrl']),
-                          //         fit: BoxFit.cover),
-                          //   ),
-                          // ),
                         ),
                       ),
                     );

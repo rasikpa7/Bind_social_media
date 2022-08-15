@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FollowButton extends StatelessWidget {
   FollowButton(
@@ -20,23 +21,23 @@ class FollowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 0.0,right: 5),
+      padding:  EdgeInsets.only(bottom: 0.0,right: 5.h),
       child: Container(
-        width: 100,
-        height: 40,
+        width: 100.w,
+        height: 40.h,
         decoration: BoxDecoration(
           color: backgroundColor,
           border: Border.all(color: borderColor),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(5.r),
         ),
         alignment: Alignment.center,
         child: TextButton(
+            onPressed: function,
             child: Text(text,
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.bold,
-                )),
-            onPressed: function),
+                ))),
       ),
     );
   }

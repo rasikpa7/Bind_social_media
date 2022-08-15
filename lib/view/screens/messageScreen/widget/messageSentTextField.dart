@@ -1,5 +1,6 @@
 import 'package:bind/model/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../model/user.dart';
 import '../../../../resources/firebase_message_api.dart';
@@ -60,15 +61,15 @@ recieverId: widget.snap.uid!,
             labelText: 'Type your message....',
             filled: true,
             fillColor: Colors.grey[400],
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(width: 15,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.r),
+            borderSide: BorderSide(width: 15.w,
             color: Colors.black),
             
-            gapPadding: 10),
+            gapPadding: 10.w),
             
           ) ,
         )),
-        SizedBox(width: 5,),
+        SizedBox(width: 5.w,),
         InkWell(
           onTap: ()async{
                messages.trim().isEmpty ? showSnackBarr('Type some message to sent!', context) :sendMessage();
@@ -76,10 +77,10 @@ recieverId: widget.snap.uid!,
           child: CircleAvatar(
             backgroundColor:   messages.trim().isEmpty ?Colors.grey:
             Colors.black,
-            radius: 24,
-            child: Icon(Icons.arrow_forward,color: Colors.white,),),
+            radius: 24.r,
+            child: const Icon(Icons.arrow_forward,color: Colors.white,),),
         ),
-        SizedBox(width: 5,),
+        SizedBox(width: 5.w,),
       ],
     );
   }

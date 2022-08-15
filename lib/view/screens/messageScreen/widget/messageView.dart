@@ -6,6 +6,7 @@ import 'package:bind/model/message_model.dart'as model;
 import 'package:bind/resources/firebase_message_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'messagebubbleWidget.dart';
@@ -34,7 +35,7 @@ class MessageViewWidget extends StatelessWidget {
 
       return snapshot.data!.docs.isEmpty?
       buildText('Say Hi...'):ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         reverse: true,
         itemCount: snapshot.data!.docs.length,
         itemBuilder: (context, index) {
@@ -52,7 +53,7 @@ class MessageViewWidget extends StatelessWidget {
     Widget buildText(String text) => Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: 24.sp),
         ),
       );
 }

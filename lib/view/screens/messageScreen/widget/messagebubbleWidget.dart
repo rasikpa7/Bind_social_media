@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../model/message_model.dart';
 
@@ -15,7 +16,7 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = Radius.circular(12);
+    final radius = Radius.circular(12.r);
     final borderRadius = BorderRadius.all(radius);
 
     return Row(
@@ -25,11 +26,11 @@ class MessageWidget extends StatelessWidget {
         //   CircleAvatar(
         //       radius: 16, backgroundImage: NetworkImage(message.recieverAvatarUrl)),
         Container( 
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.all(16),
-          constraints: BoxConstraints(maxWidth: 140),
+          padding: EdgeInsets.all(16.r),
+          margin: EdgeInsets.all(16.r),
+          constraints: BoxConstraints(maxWidth: 140.w),
           decoration: BoxDecoration(
-            color: isMe ? Colors.orangeAccent[200] : 
+            color: isMe ? Color.fromARGB(255, 38, 239, 128) : 
             Theme.of(context).accentColor,
             borderRadius: isMe
                 ? borderRadius.subtract(BorderRadius.only(bottomRight: radius))

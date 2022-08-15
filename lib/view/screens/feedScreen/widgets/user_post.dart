@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -66,7 +67,7 @@ class _UserPostsState extends State<UserPosts> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding:  EdgeInsets.all(10.0.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -76,8 +77,8 @@ class _UserPostsState extends State<UserPosts> {
                   child: Row(
                     children: [
                       Container(
-                        width: 40,
-                        height: 40,
+                        width: 40.w,
+                        height: 40.h,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: CachedNetworkImageProvider(
@@ -86,7 +87,7 @@ class _UserPostsState extends State<UserPosts> {
                             shape: BoxShape.circle),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 10.w,
                       ),
                       Text(
                         widget.snap['username'],
@@ -132,7 +133,7 @@ class _UserPostsState extends State<UserPosts> {
               alignment: Alignment.center,
               children: [
                 CachedNetworkImage(
-                  height: 400,
+                  height: 400.h,
                   imageUrl: widget.snap['postUrl'],
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
@@ -149,9 +150,9 @@ class _UserPostsState extends State<UserPosts> {
                                 'lib/model/assets/placeholder_for_homepost.jpg'),
                             fit: BoxFit.cover)),
                   ),
-                  errorWidget: (context, url, error) => const Icon(
+                  errorWidget: (context, url, error) =>   Icon(
                     Icons.error,
-                    size: 30,
+                    size: 30.sp,
                     color: Colors.red,
                   ),
                 ),
@@ -159,11 +160,11 @@ class _UserPostsState extends State<UserPosts> {
                   duration: const Duration(milliseconds: 200),
                   opacity: isLikeAnimation ? 1 : 0,
                   child: LikeAnimation(
-                    child: const 
+                    child:  
                      Icon(
                       Icons.favorite,
                       color: Colors.white,
-                      size: 120,
+                      size: 120.sp,
                     ),
                     isAnimating: isLikeAnimation,
                     duration: const Duration(milliseconds: 400),
@@ -187,11 +188,11 @@ class _UserPostsState extends State<UserPosts> {
                     smallLike: true,
                     child: IconButton(
                       icon: widget.snap['likes'].contains(user?.uid)
-                          ? Icon(
+                          ? const Icon(
                               Icons.favorite,
                               color: Colors.red,
                             )
-                          : Icon(
+                          :const  Icon(
                               Icons.favorite_border_outlined,
                               color: Colors.black,
                             ),
@@ -204,7 +205,7 @@ class _UserPostsState extends State<UserPosts> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 5.0),
+                padding:  EdgeInsets.only(right: 5.0.w),
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -216,7 +217,7 @@ class _UserPostsState extends State<UserPosts> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding:  EdgeInsets.only(left: 8.0.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -239,7 +240,7 @@ class _UserPostsState extends State<UserPosts> {
 
   Padding _publishedDate() {
     return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0.r),
               child: InkWell(
                 onTap: () {},
                 child: Text(
@@ -253,7 +254,7 @@ class _UserPostsState extends State<UserPosts> {
 
   Padding _usernameAndBioView() {
     return Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding:  EdgeInsets.only(left: 8.0.w),
               child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -269,7 +270,7 @@ class _UserPostsState extends State<UserPosts> {
 
   Padding _commentsViewSection(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:  EdgeInsets.all(8.0.r),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(

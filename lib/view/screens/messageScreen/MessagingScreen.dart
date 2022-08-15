@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/user_provider.dart';
@@ -21,7 +22,7 @@ class MessagesScreen extends StatelessWidget {
     final currentUser = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Messages',
         ),
       ),
@@ -30,21 +31,21 @@ class MessagesScreen extends StatelessWidget {
           //chat head view
           Container(
               padding: EdgeInsets.only(
-                left: 5,
-                right: 5,
+                left: 5.w,
+                right: 5.w,
               ),
               height: 100,
-              child: ChatHeaderWidjet()),
+              child: const ChatHeaderWidjet()),
 
           //recently texted list view
           Expanded(
               child: Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 10.h),
             decoration: BoxDecoration(
                 color: Colors.grey[500],
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(5))),
+                    topLeft: Radius.circular(5.r),
+                    topRight: Radius.circular(5.r))),
             child: StreamBuilder(
               stream:
                   FirebaseFirestore.instance.collection('users').orderBy('lastMessageTime',descending: true).snapshots(),
@@ -73,7 +74,7 @@ class MessagesScreen extends StatelessWidget {
                      
 
                       return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding:  EdgeInsets.all(8.0.r),
                           child: InkWell(
                             onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
@@ -82,24 +83,24 @@ class MessagesScreen extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.black.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(18)),
+                                  borderRadius: BorderRadius.circular(18.r)),
                               child: Padding(
-                                padding: const EdgeInsets.all(5.5),
+                                padding:  EdgeInsets.all(5.5.r),
                                 child: ListTile(
                                   leading: CircleAvatar(
-                                      radius: 25,
+                                      radius: 25.r,
                                       backgroundColor: Colors.grey[400],
                                       backgroundImage: CachedNetworkImageProvider(
                                           snapshot.data!.docs[index]
                                               ['photoUrl'])),
                                   title: Text(
-                                    snapshot.data!.docs[index]['username'],
-                                    style: TextStyle(
+                                    snapshot.data!.docs[index]['username'],overflow: TextOverflow.ellipsis,maxLines: 8,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
-                                  trailing: CircleAvatar(radius: 5,
-                                    backgroundColor: Colors.green,)
+                                  trailing:   CircleAvatar(radius: 5.r,
+                                    backgroundColor:snapshot.data!.docs[index]['status']=='online'? Colors.green:Colors.red)
                                 ),
                               ),
                             ),

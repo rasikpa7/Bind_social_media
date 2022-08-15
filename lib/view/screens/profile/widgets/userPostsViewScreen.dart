@@ -13,7 +13,7 @@ class UserPostViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text('Posts')),
+      appBar: AppBar(title:  const Text('Posts')),
 
       body: StreamBuilder (stream: FirebaseFirestore.instance.collection('posts').where('uid',isEqualTo: uid).
       snapshots(),

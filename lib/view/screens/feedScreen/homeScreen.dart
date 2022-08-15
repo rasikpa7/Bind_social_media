@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -26,19 +27,19 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Bind',style:GoogleFonts.dancingScript(
-                  textStyle: const TextStyle( 
-                    fontSize: 34,
+                  textStyle:  TextStyle( 
+                    fontSize: 34.sp,
                     fontWeight: FontWeight.bold,
-                  letterSpacing: 4,
+                  letterSpacing: 4.w,
                   color: Colors.white)
                 ),),
            
 
              Text(
               currentUser!.username!,style:GoogleFonts.dancingScript(
-                  textStyle: const 
+                  textStyle:  
                   TextStyle(
-                    fontSize: 34,
+                    fontSize: 34.sp,
                     // fontWeight: FontWeight.bold,
                   letterSpacing: 0,
                   color: Colors.white)
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
         
 
         return ListView.builder(itemCount: snapshot.data!.docs.length,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
           itemBuilder: ((context, index) {
           return 
         

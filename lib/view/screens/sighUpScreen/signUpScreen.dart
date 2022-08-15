@@ -134,12 +134,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     image != null
                         ? CircleAvatar(
-                            radius: 50,
+                            radius: 50.r,
                             backgroundImage: MemoryImage(image!),
                           )
-                        : const CircleAvatar(
-                            radius: 50,
-                            backgroundImage: NetworkImage(
+                        :  CircleAvatar(
+                            radius: 50.r,
+                            backgroundImage: const NetworkImage(
                                 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
                           ),
                     Positioned(
@@ -249,7 +249,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: Colors.white,
                           ),
                         ):
-                        Text(
+                       const  Text(
                           'Sign Up',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
@@ -263,7 +263,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 10.h,
                 ),
                 isLoading?
-                SizedBox():
+                const SizedBox():
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -303,7 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RichText(
                     text: TextSpan(
                   children: [
-                    TextSpan(
+                    const TextSpan(
                         text: 'Already have account ?',
                         style: TextStyle(color: Colors.black)),
                     TextSpan(
@@ -314,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               builder: (context) => LogInScreen(),
                             ));
                           },
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.blueAccent,
                             fontWeight: FontWeight.bold))
                   ],

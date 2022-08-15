@@ -3,6 +3,7 @@ import 'package:bind/view/screens/searchScreen/widgets/explore_grid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../widgets/ImageAlertView.dart';
@@ -26,7 +27,7 @@ class _SearchScreenState extends State<SearchScreen> {
           backgroundColor: Colors.white,
           title: TextFormField(
             controller: searchController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Search user',
             ),
             onFieldSubmitted: (String _) {
@@ -56,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.all(5.0),
+                              padding:  EdgeInsets.all(5.0.r),
                               child: InkWell(
                                 onTap: () => Navigator.of(context)
                                     .push(MaterialPageRoute(
@@ -66,13 +67,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       color: Colors.blueGrey,
-                                      borderRadius: BorderRadius.circular(18)),
+                                      borderRadius: BorderRadius.circular(18.r)),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(7.0),
+                                    padding:  EdgeInsets.all(7.0.r),
                                     child: ListTile(
                                       leading: CircleAvatar(
                                           backgroundColor: Colors.grey[500],
-                                          radius: 30,
+                                          radius: 30.r,
                                           backgroundImage:
                                               CachedNetworkImageProvider(
                                                   snapshot.data!.docs[index]
@@ -112,10 +113,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             crossAxisSpacing: 2,
                             repeatPattern: QuiltedGridRepeatPattern.inverted,
                             pattern: [
-                              QuiltedGridTile(2, 2),
-                              QuiltedGridTile(1, 1),
-                              QuiltedGridTile(1, 1),
-                              QuiltedGridTile(1, 2),
+                             const  QuiltedGridTile(2, 2),
+                            const   QuiltedGridTile(1, 1),
+                              const QuiltedGridTile(1, 1),
+                              const QuiltedGridTile(1, 2),
                             ],
                           ),
                           childrenDelegate: SliverChildBuilderDelegate(

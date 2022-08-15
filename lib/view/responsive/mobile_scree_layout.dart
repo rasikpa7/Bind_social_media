@@ -28,7 +28,7 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-int _currentIndex=3;
+int _currentIndex=4;
 
 final _pages=[
   HomeScreen(),

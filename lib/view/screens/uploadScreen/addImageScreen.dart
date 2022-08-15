@@ -68,23 +68,24 @@ final TextEditingController _descriptionController =TextEditingController();
   _selectImage(BuildContext context)async{
     return showDialog(context: context, builder: (context){
                
-               return SimpleDialog(
+               return
+                SimpleDialog(
                 title: const Text('Create a Post'),
                 children: [
-                  SimpleDialogOption(
-                    padding: EdgeInsets.all(20),
-                    child: const Text('Take a photo'),
-                    onPressed: ()async{
-                      Navigator.of(context).pop();
-                      Uint8List file= await pickImage(ImageSource.camera);
-                       setState(() {
-                         _file=file;
-                       });
-                    },
-                  )
-                  ,
+                  // SimpleDialogOption(
+                  //   padding: EdgeInsets.all(20.r),
+                  //   child: const Text('Take a photo'),
+                  //   onPressed: ()async{
+                  //     Navigator.of(context).pop();
+                  //     Uint8List file= await pickImage(ImageSource.camera);
+                  //      setState(() {
+                  //        _file=file;
+                  //      });
+                  //   },
+                  // )
+               
                      SimpleDialogOption(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20.r),
                     child: const Text('Choose from gallery'),
                     onPressed: ()async{
                       Navigator.of(context).pop();
@@ -96,7 +97,7 @@ final TextEditingController _descriptionController =TextEditingController();
                   ),
 
                    SimpleDialogOption(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20.r),
                     child: const Text('Cancel'),
                     onPressed: (){
                       Navigator.of(context).pop();
@@ -140,7 +141,7 @@ Widget build(BuildContext context) {
         Lottie.asset('lib/model/assets/uploadImage.json'),
           // Lottie.network('https://assets2.lottiefiles.com/packages/lf20_GxMZME.json',
           // onLoaded: (p0) => const CircularProgressIndicator(),),
-           Center(child: IconButton(onPressed: ()=>_selectImage(context), icon: const Icon(Icons.upload,size: 40,))),
+           Center(child: IconButton(onPressed: ()=>_selectImage(context), icon:  Icon(Icons.upload,size: 40.sp,))),
            Text('UPLOAD POST',
            style: GoogleFonts.openSans())
       
@@ -152,8 +153,8 @@ Widget build(BuildContext context) {
         backgroundColor:Colors.black,
         leading: IconButton(onPressed: () {
           clearImage();
-        }, icon: Icon(Icons.arrow_back_ios)),
-        title: Text('Post to'),
+        }, icon: const Icon(Icons.arrow_back_ios)),
+        title: const Text('Post to'),
         centerTitle: false,
         actions: [
           TextButton(
@@ -161,12 +162,12 @@ Widget build(BuildContext context) {
                  postImage(user!.uid!, user.username!, user.photoUrl!);
 
               },
-              child: const Text(
+              child:  Text(
                 'Post',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,
-                    fontSize: 15),
+                    fontSize: 15.sp),
               ))
         ],
       ),
@@ -177,14 +178,14 @@ Widget build(BuildContext context) {
             
           ):
          
-          Divider(),
+         const  Divider(),
           SizedBox(height: 10.h,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                radius: 25,
+                radius: 25.r,
                 backgroundImage:
                 CachedNetworkImageProvider(user!.photoUrl.toString()),
               ),

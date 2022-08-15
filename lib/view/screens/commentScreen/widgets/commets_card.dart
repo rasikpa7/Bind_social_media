@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -27,22 +28,22 @@ class _CommentCardState extends State<CommentCard> {
     onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
     Profile(uid: widget.snap['uid']))),
      child: Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 18,
+      padding:  EdgeInsets.symmetric(
+        vertical: 18.h,
         horizontal: 
-        16,
+        16.w,
    
       ),
       child: Row(
         children: [
            CircleAvatar(
             backgroundImage:  NetworkImage(widget.snap['profilePic']),
-            radius: 18,
+            radius: 18.r,
           ),
    
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left:8.0),
+              padding:  EdgeInsets.only(left:8.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,11 +64,11 @@ class _CommentCardState extends State<CommentCard> {
                   ])
                   ),
                    Padding(
-                     padding: const EdgeInsets.only(left:7.0),
+                     padding:  EdgeInsets.only(left:7.0.w),
                      child: Text(
                         DateFormat.yMMMd()
                             .format(widget.snap['datePublished'].toDate()),
-                        style: TextStyle(fontSize: 11,
+                        style: TextStyle(fontSize: 11.sp,
                           color: Colors.grey[800]),
                       ),
                    ),
@@ -75,10 +76,7 @@ class _CommentCardState extends State<CommentCard> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: const Icon(Icons.favorite,size: 18,),
-          )
+  
         ],
       ),
    

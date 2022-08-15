@@ -8,6 +8,7 @@ import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/model/utils/utils.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
+import 'package:bind/view/screens/profile/widgets/drawer.dart';
 import 'package:bind/view/screens/profile/widgets/editBioSheet.dart';
 import 'package:bind/view/screens/profile/widgets/followBotton.dart';
 import 'package:bind/view/screens/profile/widgets/userPostsViewScreen.dart';
@@ -36,7 +37,7 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileState extends State<Profile> with WidgetsBindingObserver {
   var userData = {};
   int postlenght = 0;
   var postSnap;
@@ -47,9 +48,15 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     getData();
+    setStatus('online');
   }
+
+@override
+
+
 
   getData() async {
     setState(() {
@@ -78,6 +85,27 @@ class _ProfileState extends State<Profile> {
       showSnackBarr(e.toString(), context);
     }
   }
+//
+void setStatus(String status)async{
+  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).
+  update({"status":status});
+
+}
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    
+    super.didChangeAppLifecycleState(state);
+    if(state==AppLifecycleState.resumed){
+      //online
+        setStatus("online");
+    }else{
+      //offline
+      setStatus('offline');
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +127,9 @@ class _ProfileState extends State<Profile> {
                         child: CircularProgressIndicator(),
                       )
                     : Scaffold(
+                        endDrawer: drawer(
+                          snap: model.User.fromSnap(snapshot.data),
+                        ),
                         appBar: AppBar(
                           title: Text(
                             snapshot.data!.data()!['username'],
@@ -106,7 +137,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         body: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding:  EdgeInsets.all(5.0.r),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -132,7 +163,7 @@ class _ProfileState extends State<Profile> {
                                                     });
                                               },
                                               child: CircleAvatar(
-                                                radius: 70,
+                                                radius: 70.r,
                                                 backgroundImage:
                                                     CachedNetworkImageProvider(
                                                         snapshot.data!.data()![
@@ -142,16 +173,16 @@ class _ProfileState extends State<Profile> {
                                               ),
                                             ),
                                             Positioned(
-                                                bottom: 1,
-                                                right: 1,
+                                                bottom: 1.h,
+                                                right: 1.w,
                                                 child: Container(
-                                                    height: 35,
-                                                    width: 35,
+                                                    height: 35.h,
+                                                    width: 35.w,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(50)),
+                                                                .circular(50.r)),
                                                     child: IconButton(
                                                         onPressed: () async {
                                                           await currentLUser
@@ -163,34 +194,33 @@ class _ProfileState extends State<Profile> {
                                                             context,
                                                           );
                                                         },
-                                                        icon: const Icon(
+                                                        icon:  Icon(
                                                           Icons.add_a_photo,
-                                                          size: 18,
+                                                          size: 18.sp,
                                                         ))))
                                           ],
                                         )
                                       : GestureDetector(
-                                        onLongPress: () {
+                                          onLongPress: () {
                                             showDialog(
-                                                    context: context,
-                                                    builder: (builder) {
-                                                      return ImageAlertView(
-                                                        isProfile: true,
-                                                        imageUrl: snapshot.data!
-                                                                .data()![
-                                                            'photoUrl'],
-                                                      );
-                                                    });
-                                        },
-                                        child: CircleAvatar(
-                                            radius: 70,
+                                                context: context,
+                                                builder: (builder) {
+                                                  return ImageAlertView(
+                                                    isProfile: true,
+                                                    imageUrl: snapshot.data!
+                                                        .data()!['photoUrl'],
+                                                  );
+                                                });
+                                          },
+                                          child: CircleAvatar(
+                                            radius: 70.r,
                                             backgroundColor: Colors.grey[500],
                                             backgroundImage:
                                                 CachedNetworkImageProvider(
                                                     snapshot.data!
                                                         .data()!['photoUrl']),
                                           ),
-                                      ),
+                                        ),
                                   FirebaseAuth.instance.currentUser!.uid ==
                                           widget.uid
                                       ? FollowButton(
@@ -234,11 +264,11 @@ class _ProfileState extends State<Profile> {
                                                             padding: EdgeInsets
                                                                 .symmetric(
                                                                     horizontal:
-                                                                        8,
+                                                                        8.w,
                                                                     vertical:
-                                                                        8),
+                                                                        8.h),
                                                             textStyle: TextStyle(
-                                                                fontSize: 30,
+                                                                fontSize: 30.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold)),
@@ -255,7 +285,7 @@ class _ProfileState extends State<Profile> {
                                                       }));
                                                     },
                                                     child:
-                                                        Icon(Icons.chat_bubble))
+                                                        const Icon(Icons.chat_bubble))
                                               ],
                                             )
                                           : Row(
@@ -290,11 +320,11 @@ class _ProfileState extends State<Profile> {
                                                             padding: EdgeInsets
                                                                 .symmetric(
                                                                     horizontal:
-                                                                        8,
+                                                                        8.w,
                                                                     vertical:
-                                                                        8),
+                                                                        8.h),
                                                             textStyle: TextStyle(
-                                                                fontSize: 30,
+                                                                fontSize: 30.sp,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold)),
@@ -311,20 +341,20 @@ class _ProfileState extends State<Profile> {
                                                       }));
                                                     },
                                                     child:
-                                                        Icon(Icons.chat_bubble))
+                                                        const Icon(Icons.chat_bubble))
                                               ],
                                             )
                                 ],
                               ),
-                              const SizedBox(
-                                height: 20,
+                               SizedBox(
+                                height: 20.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   buildStatColum(postlenght, 'Posts'),
-                                  const SizedBox(
-                                    width: 30,
+                                   SizedBox(
+                                    width: 30.w,
                                   ),
                                   InkWell(
                                     onTap: () async {
@@ -339,8 +369,8 @@ class _ProfileState extends State<Profile> {
                                             .length,
                                         'Followers'),
                                   ),
-                                  const SizedBox(
-                                    width: 25,
+                                   SizedBox(
+                                    width: 25.w,
                                   ),
                                   InkWell(
                                     onTap: () async {
@@ -361,18 +391,18 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
+                                  padding:  EdgeInsets.only(left: 8.0.w),
                                   child: Text(
                                     snapshot.data!.data()!['username'],
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
+                                  padding:  EdgeInsets.only(left: 8.0.w),
                                   child: FirebaseAuth
                                               .instance.currentUser!.uid ==
                                           widget.uid
@@ -392,18 +422,18 @@ class _ProfileState extends State<Profile> {
                                                   'Add Bio',
                                                   style: TextStyle(
                                                       color: Colors.grey,
-                                                      fontSize: 15),
+                                                      fontSize: 15.sp),
                                                 )
                                               : Text(
                                                   snapshot.data!.data()!['bio'],
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w400),
                                                 ),
                                         )
                                       : Text(
                                           snapshot.data!.data()!['bio'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.w400),
                                         ),
                                 ),
@@ -411,7 +441,7 @@ class _ProfileState extends State<Profile> {
                               const Divider(),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding:  EdgeInsets.all(8.0.r),
                                   child: UserPostGrid(useruid: widget.uid),
                                 ),
                               ),
@@ -426,15 +456,15 @@ class _ProfileState extends State<Profile> {
         context: context,
         builder: (context) {
           return Container(
-            height: isFList ? 350 : 110.h,
+            height: isFList ? 350.h : 110.h,
             color: const Color(0xFF737373),
             child: Container(
-              padding: EdgeInsets.all(15),
-              decoration: const BoxDecoration(
+              padding: EdgeInsets.all(15.r),
+              decoration:  BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0))),
+                      topLeft: Radius.circular(15.0.r),
+                      topRight: Radius.circular(15.0.r))),
               child: isFList
                   ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>?>(
                       stream: FirebaseFirestore.instance
@@ -508,10 +538,10 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           'Do You Want To Signout?',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
+                              fontSize: 20.sp, fontWeight: FontWeight.w500),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -549,19 +579,19 @@ class _ProfileState extends State<Profile> {
       children: [
         Text(
           num.toString(),
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style:  TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
         ),
         Text(
           label,
-          style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.grey),
+          style:  TextStyle(
+              fontSize: 15.sp, fontWeight: FontWeight.w400, color: Colors.grey),
         )
       ],
     );
   }
 
-  final kwidth = const SizedBox(
-    width: 20,
+  final kwidth =  SizedBox(
+    width: 20.w,
   );
 }
 
@@ -580,12 +610,12 @@ class FListWidget extends StatelessWidget {
             uid: currentUser!.uid!, followId: snapshot.data!.data()!['uid']);
       },
       background: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding:  EdgeInsets.all(5.0.r),
         child: Container(
-          height: 100,
+          height: 100.h,
           decoration: BoxDecoration(
               color: Theme.of(context).errorColor,
-              borderRadius: BorderRadius.circular(5)),
+              borderRadius: BorderRadius.circular(5.r)),
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -620,7 +650,7 @@ class FListWidget extends StatelessWidget {
                   backgroundColor: Colors.grey[400],
                 ),
                 title: Text(snapshot.data!.data()!['username'],
-                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                    style: TextStyle(fontSize: 18.sp, color: Colors.white)),
               ),
             ),
     );

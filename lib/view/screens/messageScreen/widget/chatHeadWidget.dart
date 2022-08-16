@@ -61,11 +61,12 @@ class ChatHeaderWidjet extends StatelessWidget {
                                 backgroundImage: CachedNetworkImageProvider(
                                     snapshot.data!.docs[index]['photoUrl']),
                                child:  Text(
-                                  snapshot.data!.docs[index]['username'],
+                                  snapshot.data!.docs[index]['username'],textAlign: TextAlign.center,
                                   style:  TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ),
                              

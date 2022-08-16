@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:bind/controller/google_signIn_Provider.dart';
 import 'package:bind/model/user.dart' as model;
 
 import 'package:bind/resources/auth_methods.dart';
@@ -54,10 +55,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
     setStatus('online');
   }
 
-@override
-
-
-
+  @override
   getData() async {
     setState(() {
       isLoading = true;
@@ -85,25 +83,26 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
       showSnackBarr(e.toString(), context);
     }
   }
-//
-void setStatus(String status)async{
-  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).
-  update({"status":status});
 
-}
+//
+  void setStatus(String status) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"status": status});
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState
-    
+
     super.didChangeAppLifecycleState(state);
-    if(state==AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       //online
-        setStatus("online");
-    }else{
+      setStatus("online");
+    } else {
       //offline
       setStatus('offline');
-
     }
   }
 
@@ -137,7 +136,7 @@ void setStatus(String status)async{
                           ),
                         ),
                         body: Padding(
-                          padding:  EdgeInsets.all(5.0.r),
+                          padding: EdgeInsets.all(5.0.r),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -182,7 +181,8 @@ void setStatus(String status)async{
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(50.r)),
+                                                                .circular(
+                                                                    50.r)),
                                                     child: IconButton(
                                                         onPressed: () async {
                                                           await currentLUser
@@ -194,7 +194,7 @@ void setStatus(String status)async{
                                                             context,
                                                           );
                                                         },
-                                                        icon:  Icon(
+                                                        icon: Icon(
                                                           Icons.add_a_photo,
                                                           size: 18.sp,
                                                         ))))
@@ -284,8 +284,8 @@ void setStatus(String status)async{
                                                                         .data));
                                                       }));
                                                     },
-                                                    child:
-                                                        const Icon(Icons.chat_bubble))
+                                                    child: const Icon(
+                                                        Icons.chat_bubble))
                                               ],
                                             )
                                           : Row(
@@ -340,20 +340,20 @@ void setStatus(String status)async{
                                                                         .data));
                                                       }));
                                                     },
-                                                    child:
-                                                        const Icon(Icons.chat_bubble))
+                                                    child: const Icon(
+                                                        Icons.chat_bubble))
                                               ],
                                             )
                                 ],
                               ),
-                               SizedBox(
+                              SizedBox(
                                 height: 20.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   buildStatColum(postlenght, 'Posts'),
-                                   SizedBox(
+                                  SizedBox(
                                     width: 30.w,
                                   ),
                                   InkWell(
@@ -369,7 +369,7 @@ void setStatus(String status)async{
                                             .length,
                                         'Followers'),
                                   ),
-                                   SizedBox(
+                                  SizedBox(
                                     width: 25.w,
                                   ),
                                   InkWell(
@@ -391,18 +391,18 @@ void setStatus(String status)async{
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding:  EdgeInsets.only(left: 8.0.w),
+                                  padding: EdgeInsets.only(left: 8.0.w),
                                   child: Text(
                                     snapshot.data!.data()!['username'],
-                                    style:
-                                        const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding:  EdgeInsets.only(left: 8.0.w),
+                                  padding: EdgeInsets.only(left: 8.0.w),
                                   child: FirebaseAuth
                                               .instance.currentUser!.uid ==
                                           widget.uid
@@ -441,7 +441,7 @@ void setStatus(String status)async{
                               const Divider(),
                               Expanded(
                                 child: Padding(
-                                  padding:  EdgeInsets.all(8.0.r),
+                                  padding: EdgeInsets.all(8.0.r),
                                   child: UserPostGrid(useruid: widget.uid),
                                 ),
                               ),
@@ -455,12 +455,14 @@ void setStatus(String status)async{
     showModalBottomSheet(
         context: context,
         builder: (context) {
+          final GoogleSignOut =
+              Provider.of<GoogleSignInProvider>(context, listen: false);
           return Container(
             height: isFList ? 350.h : 110.h,
             color: const Color(0xFF737373),
             child: Container(
               padding: EdgeInsets.all(15.r),
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15.0.r),
@@ -538,7 +540,7 @@ void setStatus(String status)async{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Text(
+                        Text(
                           'Do You Want To Signout?',
                           style: TextStyle(
                               fontSize: 20.sp, fontWeight: FontWeight.w500),
@@ -557,6 +559,7 @@ void setStatus(String status)async{
                             ElevatedButton(
                                 onPressed: () async {
                                   await AuthMethods().signOut();
+                                  await GoogleSignOut.googleSignOut();
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: ((context) =>
@@ -579,18 +582,18 @@ void setStatus(String status)async{
       children: [
         Text(
           num.toString(),
-          style:  TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
         ),
         Text(
           label,
-          style:  TextStyle(
+          style: TextStyle(
               fontSize: 15.sp, fontWeight: FontWeight.w400, color: Colors.grey),
         )
       ],
     );
   }
 
-  final kwidth =  SizedBox(
+  final kwidth = SizedBox(
     width: 20.w,
   );
 }
@@ -610,7 +613,7 @@ class FListWidget extends StatelessWidget {
             uid: currentUser!.uid!, followId: snapshot.data!.data()!['uid']);
       },
       background: Padding(
-        padding:  EdgeInsets.all(5.0.r),
+        padding: EdgeInsets.all(5.0.r),
         child: Container(
           height: 100.h,
           decoration: BoxDecoration(

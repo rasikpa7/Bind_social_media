@@ -20,7 +20,11 @@ class GoogleSignInProvider with ChangeNotifier{
     isLoading = value;
     notifyListeners();
   }
+  Future<void> googleSignOut()async{
+    await googleSignIn.signOut();
 
+  }
+//google LohIn
   Future <String>googleLogIN(BuildContext context)async{
      isLoading=true;
      notifyListeners();
@@ -53,6 +57,9 @@ class GoogleSignInProvider with ChangeNotifier{
     }
 
   }
+
+
+  //Google SignUp
 
   Future  <String>googleSignUP(BuildContext context)async{
 

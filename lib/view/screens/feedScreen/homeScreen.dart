@@ -35,15 +35,15 @@ class HomeScreen extends StatelessWidget {
                 ),),
            
 
-             Text(
-              currentUser!.username!,style:GoogleFonts.dancingScript(
-                  textStyle:  
-                  TextStyle(
-                    fontSize: 34.sp,
-                    // fontWeight: FontWeight.bold,
-                  letterSpacing: 0,
-                  color: Colors.white)
-                ),),
+            //  Text(
+            //   currentUser!.username!,style:GoogleFonts.dancingScript(
+            //       textStyle:  
+            //       TextStyle(
+            //         fontSize: 34.sp,
+            //         // fontWeight: FontWeight.bold,
+            //       letterSpacing: 0,
+            //       color: Colors.white)
+            //     ),),
 
             
           ],
@@ -53,7 +53,8 @@ class HomeScreen extends StatelessWidget {
       ),
 
       body:
-      StreamBuilder(stream: FirebaseFirestore.instance.collection('posts').orderBy('datePublished',descending: true).snapshots(),
+      StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('posts').orderBy('datePublished',descending: true).snapshots(),
       builder:(context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>snapshot){
 
         if(snapshot.connectionState==ConnectionState.none){

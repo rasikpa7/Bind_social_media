@@ -53,6 +53,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   animations: ^2.0.3
  
+ 
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,7 @@ flutter:
   assets:
     - lib/model/assets/uploadImage.json
     - lib/model/assets/placeholder_for_homepost.jpg
+    - lib/model/assets/login_lottie.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -23,7 +23,7 @@ class UserPostGrid extends StatelessWidget {
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if ( snapshot.connectionState == ConnectionState.waiting ) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -32,7 +32,9 @@ class UserPostGrid extends StatelessWidget {
               child: Text('something went wrong'),
             );
           } else if (snapshot.data?.docs == null) {
+
             return const Text('is empty');
+
           }
 
           return snapshot.data!.docs.isEmpty

@@ -70,10 +70,9 @@ class LogInScreen extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.3),
               ),
               height: 250.h,
-              child: Lottie.network(
-                  'https://assets5.lottiefiles.com/packages/lf20_dn6rwtwl.json',
-                  fit: BoxFit.contain),
+              child: Lottie.asset('lib/model/assets/login_lottie.json',fit:BoxFit.cover)
             ),
+            SizedBox(height: 50.h,),
             Container(
               alignment: Alignment.topLeft,
               child: Padding(

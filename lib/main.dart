@@ -14,8 +14,7 @@ import 'package:provider/provider.dart';
 
 import 'controller/google_signIn_Provider.dart';
 import 'controller/userSignUp_provider.dart';
-import 'view/responsive/responsive_layout_screen.dart';
-import 'view/screens/loginScreen/logInScreen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

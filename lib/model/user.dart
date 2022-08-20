@@ -42,7 +42,9 @@ class User {
       };
 
   static User  fromSnap(DocumentSnapshot? snap) {
+
     var snapshot = snap?.data() as Map<String, dynamic>;
+    
     debugPrint('movieTitlesecond: $snapshot');
     // print(snapshot['PhotoUrl'])
 

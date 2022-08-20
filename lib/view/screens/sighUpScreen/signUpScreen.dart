@@ -139,6 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           )
                         :  CircleAvatar(
                             radius: 50.r,
+                            backgroundColor: Colors.grey[400],
                             backgroundImage: const NetworkImage(
                                 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
                           ),
@@ -214,7 +215,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if(_emailcontroller.text.isEmpty||
                       _passwordController.text.isEmpty||
                       _usernamecontroller.text.isEmpty||
-                      _bioController.text.isEmpty){
+                      _bioController.text.isEmpty||image==null
+                      ){
                         showSnackBarr('please enter all fields', context);
                         return;
                       }

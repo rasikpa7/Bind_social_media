@@ -11,7 +11,7 @@ import 'package:animations/animations.dart';
 
 import '../../responsive/web_screen_layout.dart';
 
-class SplashScreen extends StatefulWidget {
+class  SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

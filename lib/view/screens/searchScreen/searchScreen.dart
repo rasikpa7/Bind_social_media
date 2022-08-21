@@ -106,7 +106,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   }
 
                   return snapshot.data!.docs.isNotEmpty
-                      ? GridView.custom(
+                      ? GridView.custom(  
+                        
                           gridDelegate: SliverQuiltedGridDelegate(
                             crossAxisCount: 4,
                             mainAxisSpacing: 2,

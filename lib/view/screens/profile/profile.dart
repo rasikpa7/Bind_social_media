@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/user_provider.dart';
@@ -105,11 +106,12 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
       setStatus('offline');
     }
   }
+ 
 
   @override
   Widget build(BuildContext context) {
     final currentLUser = Provider.of<UserProvider>(context, listen: false);
-    final imageFile = Provider.of<UserProvider>(context).file;
+    final imageFile = Provider.of<UserProvider>(context);
     final model.User? user = Provider.of<UserProvider>(context).getUser;
     return
         // ? const Center(child: CircularProgressIndicator())
@@ -149,7 +151,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                       ? Stack(
                                           children: [
                                             GestureDetector(
-                                              onLongPress: () {
+                                              onTap: () {
                                                 showDialog(
                                                     context: context,
                                                     builder: (builder) {
@@ -189,10 +191,24 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                                               .selectImage(
                                                                   context);
 
-                                                          Bottomsheet()
-                                                              .EditProfilePic(
-                                                            context,
-                                                          );
+                                                         
+                                                              showModalBottomSheet(
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.vertical(
+                                                                          top: Radius.circular(20.0
+                                                                              .h))),
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                              context: context,
+                                                              isScrollControlled:
+                                                                  true,
+                                                              builder: (context) =>const 
+                                                                  EditProfileBottomSheetContainer());
+                                                                  currentLUser.addnulltoImageFile();
+
+                                                         
+                                                          
                                                         },
                                                         icon: Icon(
                                                           Icons.add_a_photo,
@@ -227,7 +243,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                           backgroundColor: Colors.red,
                                           borderColor: Colors.white,
                                           text: 'SignOut',
-                                          function: () async {
+                                          function: () async { 
                                             await _Bottomsheet(
                                                 context, false, false);
                                           },
@@ -519,7 +535,9 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                           child: CircularProgressIndicator(),
                                         );
                                       }
-                                      if (snapshot.data!.data()!.isEmpty) {
+                                     else if (snapshot.data!.data()!.isEmpty||(snapshot.data?.data()!['followers']
+                                          as List)
+                                      .length==0) {
                                         return const Center(
                                           child: Text(
                                             'no data',
@@ -528,6 +546,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                           ),
                                         );
                                       }
+
                                       return FListWidget(
                                         snapshot: snapshot,
                                         isFollowers: isFollowers,

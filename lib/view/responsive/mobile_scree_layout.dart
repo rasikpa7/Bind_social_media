@@ -11,6 +11,7 @@ import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';
 import 'package:bind/view/screens/sighUpScreen/signUpScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,10 @@ final _pages=[
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: _pages[_currentIndex],
+      body:DoubleBackToCloseApp(child: _pages[_currentIndex],
+          snackBar: SnackBar(content: Text('Press again to exit !'),
+          ),),
+       
 
       bottomNavigationBar: BottomNavigationBar(type:BottomNavigationBarType.fixed ,
         backgroundColor: Colors.black,

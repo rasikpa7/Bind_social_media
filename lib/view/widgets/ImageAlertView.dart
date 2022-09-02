@@ -22,7 +22,7 @@ class ImageAlertView extends StatelessWidget {
       ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: CachedNetworkImage(
-                  height: 300.h,width: 150.w,
+                  height: 500.h,width: 450.w,
                     imageUrl:imageUrl,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -39,11 +39,17 @@ class ImageAlertView extends StatelessWidget {
                                   'lib/model/assets/placeholder_for_homepost.jpg'),
                               fit: BoxFit.cover)),
                     ),
-                    errorWidget: (context, url, error) =>  Icon(
-                      Icons.error,
-                      size: 30.sp,
-                      color: Colors.red,
+                    errorWidget: (context, url, error) =>
+                      Column(
+                        children: [
+                          Icon(
+                          Icons.error,
+                          size: 30.sp,
+                          color: Colors.red,
                     ),
+                    Text('NO NETWORK !!')
+                        ],
+                      ),
                   ),
       ),
    

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bind/model/user.dart';
 
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
+import 'package:bind/view/widgets/ImageAlertView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,11 @@ class ChatHeaderWidjet extends StatelessWidget {
               return Container(
                 margin: EdgeInsets.all(5.0.r),
                 child: InkWell(
+                  onLongPress: (){
+                          showDialog(context: context, builder: (builder){
+                                    return ImageAlertView(isProfile: true,imageUrl:snapshot.data!.docs[index]['photoUrl'],);
+                                  });
+                  },
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ChatScreen(
@@ -62,6 +68,7 @@ class ChatHeaderWidjet extends StatelessWidget {
                                     snapshot.data!.docs[index]['photoUrl']),
                                child:  Text(
                                   snapshot.data!.docs[index]['username'],textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
                                   style:  TextStyle(
                                       color: Colors.white,
                                       fontSize: 15.sp,

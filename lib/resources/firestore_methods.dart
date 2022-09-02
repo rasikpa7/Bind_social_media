@@ -82,14 +82,16 @@ class FireStoreMethods {
     }
   }
 
-  Future<void> deletePost(String postId, BuildContext context) async {
+  Future<String> deletePost(String postId, BuildContext context) async {
     String res;
     try {
       await _firestore.collection('posts').doc(postId).delete();
       showSnackBarr('Post Deleted', context);
+      return 'success';
     } catch (e) {
       print(e.toString());
       showSnackBarr(e.toString(), context);
+      return 'failed';
     }
   }
 

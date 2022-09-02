@@ -80,7 +80,7 @@ class _AddImageScreenState extends State<AddImageScreen> {
 
               SimpleDialogOption(
                 padding: EdgeInsets.all(20.r),
-                child: const Text('Choose from gallery'),
+                child: const Text('Pick a Photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
                   Uint8List file = await pickImage(ImageSource.gallery);

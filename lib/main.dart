@@ -1,11 +1,9 @@
-
 import 'package:bind/controller/user_provider.dart';
-import 'package:bind/view/responsive/mobile_scree_layout.dart';
-import 'package:bind/view/responsive/web_screen_layout.dart';
+
 import 'package:bind/view/screens/splashScreen/splashScreen.dart';
 
+import 'package:get/get.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,6 @@ import 'package:provider/provider.dart';
 
 import 'controller/google_signIn_Provider.dart';
 import 'controller/userSignUp_provider.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +27,7 @@ void main() async {
     await Firebase.initializeApp();
   }
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -48,13 +45,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => SignUpProvider()),
           ChangeNotifierProvider(create: (_) => GoogleSignInProvider())
         ],
-        child: MaterialApp(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               appBarTheme: AppBarTheme(color: Colors.black),
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: const Color(0XFFEFF3F6)),
-          home: SplashScreen()
+          home: SplashScreen(),
         ),
       ),
     );

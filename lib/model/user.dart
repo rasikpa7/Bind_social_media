@@ -27,7 +27,7 @@ class User {
       required this.followers,
       required this.following,
       required this.lastMessageTime,
-      required this.status});
+      required this. status});
 
   Map<String, dynamic> toJson() => {
         "username": username,

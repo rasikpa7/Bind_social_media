@@ -1,6 +1,7 @@
 
 import 'package:bind/view/screens/messageScreen/widget/chatHeadWidget.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
+import 'package:bind/view/widgets/ImageAlertView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,6 +64,7 @@ class MessagesScreen extends StatelessWidget {
 
                       }
                 return ListView.builder(
+                  physics: BouncingScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       
@@ -74,9 +76,16 @@ class MessagesScreen extends StatelessWidget {
                      
 
                       return Padding(
-                          padding:  EdgeInsets.all(8.0.r),
+                          padding:  EdgeInsets.all(3.5.r),
                           child: InkWell(
+                            onLongPress: (){
+                              showDialog(context: context, builder: (builder){
+                                    return ImageAlertView(isProfile: true,imageUrl:snapshot.data!.docs[index]['photoUrl'],);
+                                  });
+                              
+                            },
                             onTap: () {
+
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>
                     ChatScreen(snap: model. User.fromSnap(snapshot.data!.docs[index]),)));
                             },

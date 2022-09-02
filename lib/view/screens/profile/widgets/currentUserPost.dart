@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../widgets/ImageAlertView.dart';
 
@@ -38,9 +39,16 @@ class UserPostGrid extends StatelessWidget {
           }
 
           return snapshot.data!.docs.isEmpty
-              ? const Center(
-                  child: Text('No photos'),
-                )
+              ?  Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(height: 290.h,
+                    child: Lottie.asset('lib/model/assets/profile-lottie-noImage.json')),
+                 const  Text('No Recent Posts !')
+                  
+                ],
+
+              )
               : GridView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,

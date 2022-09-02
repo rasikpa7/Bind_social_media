@@ -3,8 +3,10 @@ import 'package:bind/model/user.dart' as model;
 import 'package:bind/resources/firestore_methods.dart';
 
 import 'package:bind/view/screens/commentScreen/commentsScreen.dart';
+import 'package:bind/view/screens/feedScreen/widgets/likesViewScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
 import 'package:bind/view/screens/screenwidgets/like_animation.dart';
+import 'package:bind/view/widgets/ImageAlertView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -102,17 +105,34 @@ class _UserPostsState extends State<UserPosts> {
                           showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
+                                actionsPadding: EdgeInsets.symmetric(horizontal: 10.w),
                                     title: Text('Delete Post'),
                                     content:
                                         Text('Are you sure want to delete ?'),
                                     actions: [
-                                      ElevatedButton(
-                                          onPressed: () async {
-                                            await FireStoreMethods().deletePost(
-                                                widget.snap['postId'], context);
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () async {
+                                          final result=await FireStoreMethods().deletePost(
+                                                    widget.snap['postId'], context);
+                                                    if(result=='success'){
+                                                      Get.back();
+                                                    }
+                                                
+                                              },
+                                              child: Row(
+                                                children: [Text('Yes'),
+                                                  const Icon(Icons.delete),
+                                                ],
+                                              )),
+                                                ElevatedButton(onPressed: (){
                                             Navigator.of(context).pop();
-                                          },
-                                          child: const Icon(Icons.delete))
+                                          }, child: const Text('No'))
+                                        ],
+                                      ),
+                                        
                                     ],
                                   ));
                         },
@@ -132,28 +152,36 @@ class _UserPostsState extends State<UserPosts> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                CachedNetworkImage(
-                  height: 400.h,
-                  imageUrl: widget.snap['postUrl'],
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                    showDialog(context: context, builder: (builder){
+                                    return ImageAlertView(isProfile: false,imageUrl: widget.snap
+                                          ['postUrl'],);
+                                  });
+                  },
+                  child: CachedNetworkImage(
+                    height: 400.h,
+                    imageUrl: widget.snap['postUrl'],
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  placeholder: (context, url) => Container(
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'lib/model/assets/placeholder_for_homepost.jpg'),
-                            fit: BoxFit.cover)),
-                  ),
-                  errorWidget: (context, url, error) =>   Icon(
-                    Icons.error,
-                    size: 30.sp,
-                    color: Colors.red,
+                    placeholder: (context, url) => Container(
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'lib/model/assets/placeholder_for_homepost.jpg'),
+                              fit: BoxFit.cover)),
+                    ),
+                    errorWidget: (context, url, error) =>   Icon(
+                      Icons.error,
+                      size: 30.sp,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
                 AnimatedOpacity(
@@ -221,7 +249,13 @@ class _UserPostsState extends State<UserPosts> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _likesViewCount(),
+                InkWell(onTap: (){
+                  showModalBottomSheet(context: context, builder: (builder){
+                    return LikesViewScreen(postId: widget.snap['postId'],);
+
+                  });
+                },
+                  child: _likesViewCount()),
                 _commentsViewSection(context),
               ],
             ),

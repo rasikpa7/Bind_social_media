@@ -14,14 +14,15 @@ class EditBioSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 250.h,
+    
+      padding: EdgeInsets.only(bottom: 300.h,
       left: 5.w,right: 5.w),
       color: const Color(0xFF737373),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         decoration: BoxDecoration(
             color: Colors.black, borderRadius: BorderRadius.circular(10.r)),
-        height: 150.h,
+        height: 200.h,
         child: Column(
           
           children: [
@@ -34,7 +35,7 @@ class EditBioSheet extends StatelessWidget {
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
             SizedBox(
-              height: 10.sp,
+              height: 5.h,
             ),
             Container(
                 decoration: BoxDecoration(
@@ -42,14 +43,17 @@ class EditBioSheet extends StatelessWidget {
                   borderRadius:  BorderRadius.circular(10.0.r),
                 ),
                 child: Padding(
-                    padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 5.h),
+                    padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 0.h),
                     child: TextFormField(
                       controller: editBioController,
                         decoration: const InputDecoration(
                       border: InputBorder.none,
                       labelText: 'add you bio here',
                     )))),
-                    Container(width: double.infinity,
+                    SizedBox(height: 4.h,),
+            
+                    SizedBox(width: double.infinity,
+                    height: 40.h,
                       child: Consumer<UserProvider>(
                         builder: (context, value, child) => 
                         ElevatedButton(onPressed: ()async{

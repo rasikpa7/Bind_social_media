@@ -1,4 +1,6 @@
 
+
+
 import 'package:bind/resources/auth_methods.dart';
 
 import 'package:bind/model/utils/dimention.dart';
@@ -34,9 +36,9 @@ class LogInScreen extends StatelessWidget {
     AlertDialog alert = AlertDialog(
       content:  Row(
         children: [
-          CircularProgressIndicator(),
+         const  CircularProgressIndicator(),
           Container(
-              margin: EdgeInsets.only(left: 7.w), child: Text("Loading...")),
+              margin: EdgeInsets.only(left: 7.w), child: const Text("Loading...")),
         ],
       ),
     );
@@ -51,6 +53,7 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     bool isLoading = Provider.of<UserProvider>(context).isLoading;
     final googleUser=Provider.of<GoogleSignInProvider>(context);
 
@@ -132,9 +135,11 @@ class LogInScreen extends StatelessWidget {
                                  
                             },
                             child: isLoading?
-                            Center(child: 
-                            CircularProgressIndicator(),):
-                             Text(
+                           const  Center(child: 
+                            CircularProgressIndicator(
+                              color: Colors.white
+                            ),):
+                            const  Text(
                               'LogIn',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )),
@@ -152,7 +157,7 @@ class LogInScreen extends StatelessWidget {
                       children: [
                         isLoading?
                         
-                        SizedBox():
+                      const  SizedBox():
                         Container(
                           width: 100.w,
                           decoration: BoxDecoration(
@@ -160,7 +165,8 @@ class LogInScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15.r)),
                           child: IconButton(
                               onPressed: ()async {
-                            final res= await     googleUser.googleLogIN(context);
+                            final res= await     googleUser.googleSignUP(context);
+
                             if(res=='success'){
                                     Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(

@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../resources/storage_methods.dart';
 
@@ -16,6 +17,8 @@ class UserProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   model.User? _user;
+
+  bool profileImageUpload=false;
 
   final AuthMethods _authMethods = AuthMethods();
 
@@ -39,18 +42,30 @@ void addnulltoImageFile(){
   }
 
 //edit profile pic
-  Future<void> editProfilePicPmethod(
-      {required BuildContext context, required Uint8List image}) async {
+  Future<String> editProfilePicPmethod(
+      {required BuildContext context,
+      //  required Uint8List image
+       }) async {
+       String res='';
+
     try {
+      res='started';
+      profileImageUpload=true;
+      notifyListeners();
       String photoUrl = await StorageMethods()
-          .uploadImageToStorage('profilePics', image, false);
+          .uploadImageToStorage('profilePics', file!, false);
 
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .update({'photoUrl': photoUrl});
+
+      profileImageUpload=false;
+      notifyListeners();
+         return res='completed upload';
     } catch (e) {
-      showSnackBarr(e.toString(), context);
+ return e.toString();
+      // showSnackBarr(e.toString(), context);
     }
   }
 
@@ -77,20 +92,23 @@ void addnulltoImageFile(){
           return SimpleDialog(
             title: const Text('Upload profile pic'),
             children: [
+              // SimpleDialogOption(
+              //   padding: EdgeInsets.all(20),
+              //   child: const Text('Take a photo'),
+              //   onPressed: () async {
+              //     // Navigator.of(context).pop();
+              //     await Permission.storage.request();
+              //      await Permission.manageExternalStorage.request();
+              //      await Permission.camera.request(); 
+
+              //     file = await pickImage(ImageSource.camera);
+
+              //     notifyListeners();
+              //   },
+              // ),
               SimpleDialogOption(
                 padding: EdgeInsets.all(20),
-                child: const Text('Take a photo'),
-                onPressed: () async {
-                  Navigator.of(context).pop();
-
-                  file = await pickImage(ImageSource.camera);
-
-                  notifyListeners();
-                },
-              ),
-              SimpleDialogOption(
-                padding: EdgeInsets.all(20),
-                child: const Text('Choose from gallery'),
+                child: const Text('Pick Photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
                   file = await pickImage(ImageSource.gallery);

@@ -127,7 +127,7 @@ class LogInScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.r),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
+                              backgroundColor: Colors.blue,
                             ),
                             onPressed: () {
                               LogInUser(context);

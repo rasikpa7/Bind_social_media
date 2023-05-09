@@ -24,18 +24,35 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: TextFormField(
-            controller: searchController,
-            decoration: const InputDecoration(
-              labelText: 'Search user',
+        
+          backgroundColor: Color(0xff003585),
+          title: Container(
+            padding: EdgeInsets.only(left: 10),
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+            color: Color(0xffEFEFEF)
             ),
-            onFieldSubmitted: (String _) {
-              print(_);
-              setState(() {
-                isShowUser = true;
-              });
-            },
+            child: TextFormField(
+              
+              controller: searchController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                prefixIconColor: Colors.black,
+                enabledBorder: InputBorder.none,
+                
+                disabledBorder: InputBorder.none,
+                border: InputBorder.none,
+                labelText: 'Search user',
+                
+              ),
+              onFieldSubmitted: (String _) {
+                print(_);
+                setState(() {
+                  isShowUser = true;
+                });
+              },
+            ),
           ),
         ),
         body: isShowUser

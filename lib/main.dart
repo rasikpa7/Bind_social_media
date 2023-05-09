@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              appBarTheme: AppBarTheme(color: Colors.black),
-              primarySwatch: Colors.blue,
+              appBarTheme: AppBarTheme(color: Color(0xff003585)),
+              primaryColor: Color(0xffFEBA02),
               scaffoldBackgroundColor: const Color(0XFFEFF3F6)),
           home: SplashScreen(),
         ),

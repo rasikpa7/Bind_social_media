@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return MyHomePage();
+              return NewHomePage();
             },
           ), 
            

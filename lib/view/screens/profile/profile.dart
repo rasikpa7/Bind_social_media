@@ -8,6 +8,7 @@ import 'package:bind/resources/auth_methods.dart';
 import 'package:bind/resources/firestore_methods.dart';
 import 'package:bind/model/utils/utils.dart';
 import 'package:bind/view/screens/loginScreen/logInScreen.dart';
+import 'package:bind/view/screens/loginScreen/new_loginPage.dart';
 import 'package:bind/view/screens/messageScreen/widget/chatScreen.dart';
 import 'package:bind/view/screens/profile/widgets/drawer.dart';
 import 'package:bind/view/screens/profile/widgets/editBioSheet.dart';
@@ -29,6 +30,7 @@ import 'package:provider/provider.dart';
 
 import '../../../controller/user_provider.dart';
 import '../feedScreen/widgets/user_post.dart';
+import '../loginScreen/new_loginPage.dart';
 import 'widgets/editProfileImageBottomSheet.dart';
 
 class Profile extends StatefulWidget {
@@ -582,7 +584,8 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: ((context) =>
-                                              LogInScreen())));
+                                             NewHomePage()
+                                             )));
                                 },
                                 child: const Text('OK'))
                           ],

@@ -7,7 +7,6 @@ import 'package:bind/view/screens/feedScreen/homeScreen.dart';
 import 'package:bind/view/screens/profile/profile.dart';
 
 import 'package:bind/view/screens/searchScreen/searchScreen.dart';
-import 'package:bind/view/screens/searchScreen/searchScreen.dart';
 import 'package:bind/view/screens/uploadScreen/addImageScreen.dart';
 import 'package:bind/view/screens/sighUpScreen/signUpScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +28,7 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-int _currentIndex=4;
+int _currentIndex=0;
 
 final _pages=[
   HomeScreen(),
@@ -52,31 +51,35 @@ final _pages=[
           ),),
        
 
-      bottomNavigationBar: BottomNavigationBar(type:BottomNavigationBarType.fixed ,
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex=value;
-          });
-          
-        },
-   
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Feed',
-          backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.search),label: 'Search',
-          backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.add_circle),label: 'Add Post',
-          backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.chat_bubble),label: 'Messsages',
-          backgroundColor: Colors.white),
-              BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile',
-          backgroundColor: Colors.white),
-
-      ]),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: BottomNavigationBar(type:BottomNavigationBarType.fixed ,
+        
+          backgroundColor: Color.fromARGB(255, 255, 198, 41),
+          selectedItemColor: Color(0xff003585),
+          unselectedItemColor: Color(0xffFFFFFF),
+          currentIndex: _currentIndex,
+          onTap: (value) {
+            setState(() {
+              _currentIndex=value;
+            });
+            
+          },
+         
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Feed',
+            backgroundColor: Colors.white),
+                BottomNavigationBarItem(icon: Icon(Icons.search),label: 'Search',
+            backgroundColor: Colors.white),
+                BottomNavigationBarItem(icon: Icon(Icons.add_circle),label: 'Add Post',
+            backgroundColor: Colors.white),
+                BottomNavigationBarItem(icon: Icon(Icons.chat_bubble),label: 'Messsages',
+            backgroundColor: Colors.white),
+                BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile',
+            backgroundColor: Colors.white),
+      
+        ]),
+      ),
     );
     
   }

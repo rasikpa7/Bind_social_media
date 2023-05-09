@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentUser=Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // backgroundColor:Colors.transparent ,
         elevation: 0,

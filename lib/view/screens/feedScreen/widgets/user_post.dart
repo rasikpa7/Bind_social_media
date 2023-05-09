@@ -67,6 +67,7 @@ class _UserPostsState extends State<UserPosts> {
     final model.User? user = Provider.of<UserProvider>(context).getUser;
 
     return Card(
+      elevation: 0,
       child: Column(
         children: [
           Padding(
@@ -190,6 +191,7 @@ class _UserPostsState extends State<UserPosts> {
                   child: LikeAnimation(
                     child:  
                      Icon(
+
                       Icons.favorite,
                       color: Colors.white,
                       size: 120.sp,
@@ -207,7 +209,7 @@ class _UserPostsState extends State<UserPosts> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -217,11 +219,14 @@ class _UserPostsState extends State<UserPosts> {
                     child: IconButton(
                       icon: widget.snap['likes'].contains(user?.uid)
                           ? const Icon(
+                              
                               Icons.favorite,
+                              size: 25,
                               color: Colors.red,
                             )
                           :const  Icon(
                               Icons.favorite_border_outlined,
+                              size: 25,
                               color: Colors.black,
                             ),
                       onPressed: () async {

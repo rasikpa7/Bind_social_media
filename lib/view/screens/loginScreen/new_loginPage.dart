@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
 import '../../../controller/google_signIn_Provider.dart';
 import '../../../controller/user_provider.dart';
 import '../../../resources/auth_methods.dart';
@@ -37,6 +36,7 @@ class NewHomePage extends StatefulWidget {
 }
 
 class _NewHomePageState extends State<NewHomePage> {
+
    final TextEditingController _emailcontroller = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
@@ -45,9 +45,11 @@ class _NewHomePageState extends State<NewHomePage> {
     
 
   Widget build(BuildContext context) {
+
     bool isLoading = Provider.of<UserProvider>(context).isLoading;
 
     final googleUser=Provider.of<GoogleSignInProvider>(context);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ScrollConfiguration(

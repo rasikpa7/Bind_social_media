@@ -23,7 +23,6 @@ import '../sighUpScreen/signUpScreen.dart';
 void main() {
   runApp(
     MaterialApp(
-      title: 'Translucent Login UI',
       home: NewHomePage(),
     ),
   );
